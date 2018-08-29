@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:\\nintendo\\n64kit\\nusys\\include",
+                "C:\\nintendo\\n64kit\\nustd\\include",
+                "C:\\ultra\\usr\\include"
+            ],
+            "defines": [
+                "DNU_DEBUG",
+                "DF3DEX_GBI_2",
+                "_LANGUAGE_C"
+            ]
+        }
+    ],
+    "version": 4
+}
