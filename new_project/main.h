@@ -10,8 +10,16 @@
 #ifdef _LANGUAGE_C
 
 /* Definition of the external variable  */
+/* Affix "volatile" to the variable which is shared by the main routine 
+   and the call-back so that it is not cleared by the optimization.  */
+extern volatile int stage;
 extern NUContData	contdata[1]; /* Read data of the controller  */
-extern u8 contPattern;		     /* The pattern of the connected controller  */
+/* Values 0 or 1 used by the pending task check of the call-back function  */
+extern volatile int pendflag;
+/* The number of the display scene in a second  */
+extern int dspcount;
+/* The buffer for the console display  */
+extern char conbuf[];
 
 #endif /* _LANGUAGE_C */
 #endif /* MAIN_H */

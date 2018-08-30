@@ -1,4 +1,4 @@
-# 	NuSYSTEM samples nu1 Makefile
+# 	NuSYSTEM samples nu5 Makefile
 #       Copyright (C) 1997-1999, NINTENDO Co,Ltd.
 
 include $(ROOT)/usr/include/make/PRdefs
@@ -16,10 +16,12 @@ CC  = gcc
 LD  = ld
 MAKEROM = mild
 
+NUAUDIOLIB = -lnualsgi_n_d -lgn_audio_d
+
 LCDEFS =	-DNU_DEBUG -DF3DEX_GBI_2
 LCINCS =	-I. -I$(NUSYSINCDIR) -I$(ROOT)/usr/include/PR
 LCOPTS =	-G 0
-LDFLAGS = $(MKDEPOPT) -L$(LIB) -L$(NUSYSLIBDIR) -lnusys_d -lgultra_d -L$(GCCDIR)/mipse/lib -lkmc
+LDFLAGS =	$(MKDEPOPT) -L$(LIB) -L$(NUSYSLIBDIR) $(NUAUDIOLIB) -lnusys_d -lgultra_d -L$(GCCDIR)/mipse/lib -lkmc
 
 OPTIMIZER =	-g
 
@@ -27,7 +29,7 @@ APP =		build/project.out
 
 TARGETS =	build/project.n64
 
-HFILES =	main.h render.h
+HFILES =	main.h render.h segment.h
 
 CODEFILES   = 	main.c stage00.c render.c
 
