@@ -28,7 +28,7 @@ static Mesh_t squareMesh = {
   .vtxCount = sizeof(shade_vtx)/sizeof(*shade_vtx),
   .idx = squareIndicies,
   .idxCount = sizeof(squareIndicies)/sizeof(*squareIndicies)
-}
+};
 
 /* The initialization of stage 0  */
 void initStage00(void)
@@ -43,8 +43,8 @@ void makeDL00(void)
 {
   { Render_BeginFrame(); 
   
-    guTranslate(&g_RenderData->translation, triPos_x, triPos_y, 0.0F);
-    guRotate(&g_RenderData->rotation, theta, 0.0F, 0.0F, 1.0F);
+    guTranslate(&g_RenderFrameData->translation, triPos_x, triPos_y, 0.0F);
+    guRotate(&g_RenderFrameData->rotation, theta, 0.0F, 0.0F, 1.0F);
 
     { Render_BeginDraw();
       Render_SetCycleInfo(&g_DefaultCycleInfo);
@@ -52,8 +52,8 @@ void makeDL00(void)
       Render_Mesh(&squareMesh);
     } Render_EndDraw();
 
-    guTranslate(&g_RenderData->translation, triPos_x, triPos_y, 0.0F);
-    guRotate(&g_RenderData->rotation, 0.f, 0.0F, 0.0F, 1.0F);
+    guTranslate(&g_RenderFrameData->translation, triPos_x, triPos_y, 0.0F);
+    guRotate(&g_RenderFrameData->rotation, 0.f, 0.0F, 0.0F, 1.0F);
     
     { Render_BeginDraw();
       Render_SetCycleInfo(&g_DefaultCycleInfo);
