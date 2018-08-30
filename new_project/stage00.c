@@ -13,8 +13,22 @@ static float triPos_x; /* The display position, X */
 static float triPos_y; /* The display position, Y */
 static float theta;  /* The rotational angle of the square  */
 
-void shadetri();
+/* The vertex coordinate  */
+static Vtx shade_vtx[] =  {
+        {        -64,  64, -5, 0, 0, 0, 0, 0xff, 0, 0xff	},
+        {         64,  64, -5, 0, 0, 0, 0, 0, 0, 0xff	},
+        {         64, -64, -5, 0, 0, 0, 0, 0, 0xff, 0xff	},
+        {        -64, -64, -5, 0, 0, 0, 0xff, 0, 0, 0xff	},
+};
 
+static u16 squareIndicies[] = {0,1,2, 2,3,0};
+
+static Mesh_t squareMesh = {
+  .vtx = shade_vtx,
+  .vtxCount = sizeof(shade_vtx)/sizeof(*shade_vtx),
+  .idx = squareIndicies,
+  .idxCount = sizeof(squareIndicies)/sizeof(*squareIndicies)
+}
 
 /* The initialization of stage 0  */
 void initStage00(void)
@@ -27,31 +41,27 @@ void initStage00(void)
 /* Make the display list and activate the task  */
 void makeDL00(void)
 {
-  {
-    Render_BeginFrame(); 
+  { Render_BeginFrame(); 
   
-    guTranslate(&g_RenderData->translate, triPos_x, triPos_y, 0.0F);
-    guRotate(&g_RenderData->modeling, theta, 0.0F, 0.0F, 1.0F);
+    guTranslate(&g_RenderData->translation, triPos_x, triPos_y, 0.0F);
+    guRotate(&g_RenderData->rotation, theta, 0.0F, 0.0F, 1.0F);
 
-    Render_BeginDraw(); 
-    {
-      shadetri();
-    } 
-    Render_EndDraw();
+    { Render_BeginDraw();
+      Render_SetCycleInfo(&g_DefaultCycleInfo);
+      Render_SetGeometryMode(G_SHADE | G_SHADING_SMOOTH);
+      Render_Mesh(&squareMesh);
+    } Render_EndDraw();
 
-
-    guTranslate(&g_RenderData->translate, triPos_x, triPos_y, 0.0F);
-    guRotate(&g_RenderData->modeling, 0.f, 0.0F, 0.0F, 1.0F);
+    guTranslate(&g_RenderData->translation, triPos_x, triPos_y, 0.0F);
+    guRotate(&g_RenderData->rotation, 0.f, 0.0F, 0.0F, 1.0F);
     
-    Render_BeginDraw(); 
-    {
-      shadetri();
-    } 
-    Render_EndDraw();
+    { Render_BeginDraw();
+      Render_SetCycleInfo(&g_DefaultCycleInfo);
+      Render_SetGeometryMode(G_SHADE | G_SHADING_SMOOTH);
+      Render_Mesh(&squareMesh);
+    } Render_EndDraw();
 
-  
-    Render_EndFrame();
-  }
+  } Render_EndFrame();
 }
 
 
@@ -80,22 +90,4 @@ void updateGame00(void)
   /* Change the pending check when the Z button is pushed  */
   if(contdata[0].trigger & Z_TRIG)
     pendflag ^= 1;
-}
-
-/* The vertex coordinate  */
-static Vtx shade_vtx[] =  {
-        {        -64,  64, -5, 0, 0, 0, 0, 0xff, 0, 0xff	},
-        {         64,  64, -5, 0, 0, 0, 0, 0, 0, 0xff	},
-        {         64, -64, -5, 0, 0, 0, 0, 0, 0xff, 0xff	},
-        {        -64, -64, -5, 0, 0, 0, 0xff, 0, 0, 0xff	},
-};
-
-/* Draw a square  */
-void shadetri()
-{
-  int i;
-  //for(i = 0; i < 25; i++)
-  gSPVertex(glistp++,&(shade_vtx[0]),4, 0);
-  gDPPipeSync(glistp++);
-  gSP2Triangles(glistp++,0,1,2,0,0,2,3,0);
 }
