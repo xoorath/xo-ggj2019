@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/../../../N64/nintendo/n64kit/nusys/include",
+                "${workspaceFolder}/../../../N64/nintendo/n64kit/nustd/include",
+                "${workspaceFolder}/../../../N64/ultra/usr/include"
+            ],
+            "defines": [
+                "DNU_DEBUG",
+                "DF3DEX_GBI_2",
+                "_LANGUAGE_C"
+            ]
+        }
+    ],
+    "version": 4
+}

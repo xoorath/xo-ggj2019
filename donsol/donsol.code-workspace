@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "explorer.sortOrder": "type",
+    "files.associations": {
+      "main.h": "c",
+      "assert.h": "c",
+      "render.h": "c"
+    },
+  }
+}
