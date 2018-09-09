@@ -12,7 +12,9 @@
     "files.associations": {
       "main.h": "c",
       "assert.h": "c",
-      "render.h": "c"
+      "render.h": "c",
+      "gentex.cards.h": "c",
+      "gen.n6401.h": "c"
     },
   }
 }
