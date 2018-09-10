@@ -40,44 +40,8 @@ beginseg
 	include "gentex.o"
 endseg
 
-
-beginseg
-	name "midibank"
-	flags RAW
-	include "wave.ctl"
-endseg
-
-beginseg
-	name "miditable"
-	flags RAW
-	include "wave.tbl"
-endseg
-
-beginseg
-	name "seq"
-	flags RAW
-	include "midi.sbk"  
-endseg
-
-beginseg
-	name "sfxbank"
-	flags RAW
-	include "se.ctl"
-endseg
-
-beginseg
-	name "sfxtable"
-	flags RAW
-	include "se.tbl"
-endseg
-
 beginwave
 	name	"nu5"
 	include	"code"
   include "gentex"
-	include "miditable"
-	include "midibank"
-	include "sfxbank"
-	include "sfxtable"
-	include "seq"
 endwave

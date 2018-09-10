@@ -121,6 +121,7 @@ void Render_BeginFrame(void)
           -(float)SCREEN_WD / 2.0F, (float)SCREEN_WD / 2.0F,
           -(float)SCREEN_HT / 2.0F, (float)SCREEN_HT / 2.0F,
           1.0F, 10.0F, 1.0F);
+  gSPMatrix(GFX(), OS_K0_TO_PHYSICAL(&(g_RenderFrameData->projection)), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
 }
 
 // extern
@@ -134,8 +135,6 @@ void Render_BeginDraw(void)
 {
   Render_InitDisplayList();
 
-  gSPMatrix(GFX(), OS_K0_TO_PHYSICAL(&(g_RenderFrameData->projection)), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
-  // maybe load on this call, not mul. not sure if it matters.
   gSPMatrix(GFX(), OS_K0_TO_PHYSICAL(&(g_RenderFrameData->translation)), G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
   gSPMatrix(GFX(), OS_K0_TO_PHYSICAL(&(g_RenderFrameData->rotation)), G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
   gDPPipeSync(GFX());
