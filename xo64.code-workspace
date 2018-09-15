@@ -5,8 +5,22 @@
 		}
 	],
 	"settings": {
-		"editor.tabSize": 2,
+    "editor.tabSize": 2,
     "editor.detectIndentation": false,
     "editor.insertSpaces": true,
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "*.o":true,
+      "*.sbk":true,
+      "Makefile.*":true,
+      "*.ctl":true,
+      "*.tbl":true
+    },
+    "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": true,
   }
 }
