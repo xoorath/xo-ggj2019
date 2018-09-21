@@ -1,19 +1,20 @@
 /*
-   stage00.c 
+   stage00.c
 
-   Copyright (C) 1997-1999, NINTENDO Co,Ltd.	
+   Copyright (C) 1997-1999, NINTENDO Co,Ltd.
 */
 
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
 #include "graphic.h"
+#include "xo-render.h"
 
 static float triPos_x; /* The display position, X */
 static float triPos_y; /* The display position, Y */
 static float theta;  /* The rotational angle of the square  */
 
-void shadetri(Dynamic* dynamicp);
+void shadetri();
 
 
 /* The initialization of stage 0  */
@@ -25,67 +26,36 @@ void initStage00(void)
 }
 
 /* Make the display list and activate the task  */
+Transformation_t parentSquare, childSquare;
 void makeDL00(void)
 {
-  Dynamic* dynamicp;
+  xo_render_BeginFrame();
 
-  /* Specify the display list buffer  */
-  dynamicp = &gfx_dynamic[gfx_gtask_no];
-  glistp = &gfx_glist[gfx_gtask_no][0];
+  xo_render_BeginDisplayList_Render();
 
-  /*  The initialization of RCP  */
-  gfxRCPInit();
+  {
+    xo_render_Translate(&parentSquare, triPos_x, triPos_y, 0.0F);
+    xo_render_Rotate(&parentSquare, theta, 0.0F, 0.0F, 1.0F);
+    xo_render_BeginDraw(&parentSquare);
+    shadetri();
+    {
+      xo_render_Translate(&childSquare, 25.f, 0.0f, 0.0F);
+      xo_render_Rotate(&childSquare, theta, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&childSquare);
+      shadetri();
+      xo_render_EndDraw();
+    }
+    xo_render_EndDraw();
+  }
 
-  /* Clear the frame and Z-buffer  */
-  gfxClearCfb();
-
-  /* projection,modeling matrix set */
-  guOrtho(&dynamicp->projection,
-	  -(float)SCREEN_WD/2.0F, (float)SCREEN_WD/2.0F,
-	  -(float)SCREEN_HT/2.0F, (float)SCREEN_HT/2.0F,
-	  1.0F, 10.0F, 1.0F);
-  guTranslate(&dynamicp->translate, triPos_x, triPos_y, 0.0F);
-  guRotate(&dynamicp->modeling, theta, 0.0F, 0.0F, 1.0F);
-
-  /* Draw a square  */
-  shadetri(dynamicp);
-
-  gDPFullSync(glistp++);
-  gSPEndDisplayList(glistp++);
-
-  assert((glistp - gfx_glist[gfx_gtask_no]) < GFX_GLIST_LEN);
-
-  /* Activate the task and
-     switch display buffers. */
-  nuGfxTaskStart(&gfx_glist[gfx_gtask_no][0],
-		 (s32)(glistp - gfx_glist[gfx_gtask_no]) * sizeof (Gfx),
-		 NU_GFX_UCODE_F3DEX , NU_SC_NOSWAPBUFFER);
-
-  nuDebTaskPerfBar0(1,200,NU_SC_NOSWAPBUFFER);
-
-  /* Display the drawing state   */
-  nuDebConTextPos(0,3,3);
-  nuDebConCPuts(0, "Stage 00");
-  nuDebConTextPos(0,3,4);
-  if(pendflag == 0)
-    nuDebConCPuts(0, "2 Frame Buffer");
-  else
-    nuDebConCPuts(0, "3 Frame Buffer");
-  nuDebConTextPos(0,3,5);
-  sprintf(conbuf,"%2d draw/sec",dspcount);
-  nuDebConCPuts(0, conbuf);
-
-  /* Draw characters on the frame buffer  */
-  nuDebConDisp(NU_SC_SWAPBUFFER);
-
-  /* Switch display list buffers  */
-  gfx_gtask_no ^= 1;
+  xo_render_EndDisplayList_Render();
+  xo_render_DebugLog("stage 00");
+  xo_render_EndFrame();
 }
-
 
 /* The game progressing process for stage 0 */
 void updateGame00(void)
-{  
+{
   static float vel = 1.0;
 
   /* Data reading of controller 1  */
@@ -128,16 +98,9 @@ static Vtx shade_vtx[] =  {
 };
 
 /* Draw a square  */
-void shadetri(Dynamic* dynamicp)
+void shadetri()
 {
   int i;
-
-  gSPMatrix(glistp++,OS_K0_TO_PHYSICAL(&(dynamicp->projection)),
-		G_MTX_PROJECTION|G_MTX_LOAD|G_MTX_NOPUSH);
-  gSPMatrix(glistp++,OS_K0_TO_PHYSICAL(&(dynamicp->translate)),
-		G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
-  gSPMatrix(glistp++,OS_K0_TO_PHYSICAL(&(dynamicp->modeling)),
-		G_MTX_MODELVIEW|G_MTX_MUL|G_MTX_NOPUSH);
 
   gSPVertex(glistp++,&(shade_vtx[0]),4, 0);
 
@@ -147,6 +110,5 @@ void shadetri(Dynamic* dynamicp)
   gSPClearGeometryMode(glistp++,0xFFFFFFFF);
   gSPSetGeometryMode(glistp++,G_SHADE| G_SHADING_SMOOTH);
 
-  for(i = 0; i < 1; i++)
-    gSP2Triangles(glistp++,0,1,2,0,0,2,3,0);
+  gSP2Triangles(glistp++,0,1,2,0,0,2,3,0);
 }

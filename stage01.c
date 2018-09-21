@@ -1,13 +1,14 @@
 /*
-   stage01.c 
+   stage01.c
 
-   Copyright (C) 1997-1999, NINTENDO Co,Ltd.			
+   Copyright (C) 1997-1999, NINTENDO Co,Ltd.
 */
 
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
 #include "graphic.h"
+#include "xo-render.h"
 
 static float triPos_x; /* The display position, X */
 static float triPos_y; /* The display position, Y */
@@ -43,7 +44,7 @@ void makeDL01(void)
   gDPFullSync(glistp++);
   gSPEndDisplayList(glistp++);
 
-  /* Activate the task and 
+  /* Activate the task and
      switch display buffers. */
   nuGfxTaskStart(&gfx_clear_glist[gfx_gtask_no][0],
 		 (s32)(glistp - gfx_clear_glist[gfx_gtask_no]) * sizeof (Gfx),
@@ -72,7 +73,7 @@ void makeDL01(void)
 
   assert((glistp - gfx_glist[gfx_gtask_no]) < GFX_GLIST_LEN);
 
-  /* Activate the task and 
+  /* Activate the task and
      switch display buffers. */
   nuGfxTaskStart(&gfx_glist[gfx_gtask_no][0],
 		 (s32)(glistp - gfx_glist[gfx_gtask_no]) * sizeof (Gfx),
@@ -104,7 +105,7 @@ void makeDL01(void)
 
 /* The game progressing process for stage 1 */
 void updateGame01(void)
-{  
+{
   static float vel = 1.0;
 
   /* Data reading of controller 1 */
