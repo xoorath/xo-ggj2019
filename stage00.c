@@ -7,15 +7,14 @@
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
-#include "graphic.h"
 #include "xo-render.h"
 
 static float triPos_x; /* The display position, X */
 static float triPos_y; /* The display position, Y */
 static float theta;  /* The rotational angle of the square  */
+static Transformation_t parentSquare, childSquare, grandchildSquare;
 
 void shadetri();
-
 
 /* The initialization of stage 0  */
 void initStage00(void)
@@ -25,8 +24,6 @@ void initStage00(void)
   theta = 0.0;
 }
 
-/* Make the display list and activate the task  */
-Transformation_t parentSquare, childSquare;
 void makeDL00(void)
 {
   xo_render_BeginFrame();
@@ -43,6 +40,13 @@ void makeDL00(void)
       xo_render_Rotate(&childSquare, theta, 0.0F, 0.0F, 1.0F);
       xo_render_BeginDraw(&childSquare);
       shadetri();
+      {
+        xo_render_Translate(&grandchildSquare, 2.5f, 0.0f, 0.0F);
+        xo_render_Rotate(&grandchildSquare, theta, 0.0F, 0.0F, 1.0F);
+        xo_render_BeginDraw(&grandchildSquare);
+        shadetri();
+        xo_render_EndDraw();
+      }
       xo_render_EndDraw();
     }
     xo_render_EndDraw();
@@ -102,13 +106,13 @@ void shadetri()
 {
   int i;
 
-  gSPVertex(glistp++,&(shade_vtx[0]),4, 0);
+  gSPVertex(g_Glist++,&(shade_vtx[0]),4, 0);
 
-  gDPPipeSync(glistp++);
-  gDPSetCycleType(glistp++,G_CYC_1CYCLE);
-  gDPSetRenderMode(glistp++,G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-  gSPClearGeometryMode(glistp++,0xFFFFFFFF);
-  gSPSetGeometryMode(glistp++,G_SHADE| G_SHADING_SMOOTH);
+  gDPPipeSync(g_Glist++);
+  gDPSetCycleType(g_Glist++,G_CYC_1CYCLE);
+  gDPSetRenderMode(g_Glist++,G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+  gSPClearGeometryMode(g_Glist++,0xFFFFFFFF);
+  gSPSetGeometryMode(g_Glist++,G_SHADE| G_SHADING_SMOOTH);
 
-  gSP2Triangles(glistp++,0,1,2,0,0,2,3,0);
+  gSP2Triangles(g_Glist++,0,1,2,0,0,2,3,0);
 }

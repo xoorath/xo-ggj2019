@@ -21,10 +21,6 @@
       "*.tbl":true
     },
     "editor.renderWhitespace": "boundary",
-    "files.trimTrailingWhitespace": true,
-    "files.associations": {
-      "graphic.h": "c",
-      "xo-render.h": "c"
-    },
+    "files.trimTrailingWhitespace": true
   }
 }

@@ -7,15 +7,14 @@
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
-#include "graphic.h"
 #include "xo-render.h"
 
 static float triPos_x; /* The display position, X */
 static float triPos_y; /* The display position, Y */
 static float theta;  /* The rotational angle of the square */
+static Transformation_t parentSquare, childSquare;
 
-void shadetri(Dynamic* dynamicp);
-
+void shadetri();
 
 /* The initialization of stage 1 */
 void initStage01(void)
@@ -25,80 +24,32 @@ void initStage01(void)
   theta = 0.0;
 }
 
-
 /* Make the display list for stage 1 and activate the task */
 void makeDL01(void)
 {
-  Dynamic* dynamicp;
+  xo_render_BeginFrame();
 
-  glistp = &gfx_clear_glist[gfx_gtask_no][0];
+  xo_render_BeginDisplayList_Render();
 
-  /* Initialize RCP */
-  gfxRCPInit();
+  {
+    xo_render_Translate(&parentSquare, triPos_x, triPos_y, 0.0F);
+    xo_render_Rotate(&parentSquare, theta, 0.0F, 0.0F, 1.0F);
+    xo_render_BeginDraw(&parentSquare);
+    shadetri();
+    {
+      xo_render_Translate(&childSquare, 25.f, 0.0f, 0.0F);
+      xo_render_Rotate(&childSquare, theta, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&childSquare);
+      shadetri();
+      xo_render_EndDraw();
+    }
+    xo_render_EndDraw();
+  }
 
-  /* Clear the frame and Z-buffer */
-  gfxClearCfb();
-
-  assert((glistp - gfx_clear_glist[gfx_gtask_no]) < GFX_CLEAR_GLIST_LEN);
-
-  gDPFullSync(glistp++);
-  gSPEndDisplayList(glistp++);
-
-  /* Activate the task and
-     switch display buffers. */
-  nuGfxTaskStart(&gfx_clear_glist[gfx_gtask_no][0],
-		 (s32)(glistp - gfx_clear_glist[gfx_gtask_no]) * sizeof (Gfx),
-		 NU_GFX_UCODE_F3DEX , NU_SC_NOSWAPBUFFER);
-
-  /* Specify the display list buffer */
-  dynamicp = &gfx_dynamic[gfx_gtask_no];
-  glistp = &gfx_glist[gfx_gtask_no][0];
-
-  /* The initialization of RCP */
-  gfxRCPInit();
-
-  /* projection,modeling matrix set */
-  guOrtho(&dynamicp->projection,
-	  -(float)SCREEN_WD/2.0F, (float)SCREEN_WD/2.0F,
-	  -(float)SCREEN_HT/2.0F, (float)SCREEN_HT/2.0F,
-	  1.0F, 10.0F, 1.0F);
-  guTranslate(&dynamicp->translate, triPos_x, triPos_y, 0.0F);
-  guRotate(&dynamicp->modeling, theta, 0.0F, 0.0F, 1.0F);
-
-  /* Draw a square */
-  shadetri(dynamicp);
-
-  gDPFullSync(glistp++);
-  gSPEndDisplayList(glistp++);
-
-  assert((glistp - gfx_glist[gfx_gtask_no]) < GFX_GLIST_LEN);
-
-  /* Activate the task and
-     switch display buffers. */
-  nuGfxTaskStart(&gfx_glist[gfx_gtask_no][0],
-		 (s32)(glistp - gfx_glist[gfx_gtask_no]) * sizeof (Gfx),
-		 NU_GFX_UCODE_F3DEX , NU_SC_NOSWAPBUFFER);
-
-
-  nuDebTaskPerfBar0(1,200,NU_SC_NOSWAPBUFFER);
-
-  /* Display the drawing state  */
-  nuDebConTextPos(0,3,3);
-  nuDebConCPuts(0, "Stage 01");
-  nuDebConTextPos(0,3,4);
-  if(pendflag == 0)
-    nuDebConCPuts(0, "2 Frame Buffer");
-  else
-    nuDebConCPuts(0, "3 Frame Buffer");
-  nuDebConTextPos(0,3,5);
-  sprintf(conbuf,"%2d draw/sec",dspcount);
-  nuDebConCPuts(0, conbuf);
-
-  /* Draw characters on the frame buffer */
-  nuDebConDisp(NU_SC_SWAPBUFFER);
-
-  /* Switch display list buffers */
-  gfx_gtask_no ^= 1;
+  xo_render_EndDisplayList_Render();
+  xo_render_DebugLog("stage 01");
+  xo_render_DebugLog("This stage has more text.");
+  xo_render_EndFrame();
 
 }
 

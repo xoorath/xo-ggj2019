@@ -29,9 +29,9 @@ APP =		build/project.out
 
 TARGETS =	build/project.n64
 
-HFILES =	main.h graphic.h segment.h
+HFILES =	main.h segment.h
 
-CODEFILES   = 	main.c stage00.c stage01.c graphic.c xo-render.c
+CODEFILES   = 	main.c stage00.c stage01.c xo-render.c
 
 CODEOBJECTS =	$(CODEFILES:.c=.o)  $(NUSYSLIBDIR)/nusys.o
 

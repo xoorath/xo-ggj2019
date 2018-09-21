@@ -3,48 +3,80 @@
 
 #include <nusys.h>
 
-/* The screen size */
+//////////////////////////////////////////////////////////////////////////////////////////
+// Config
+//////////////////////////////////////////////////////////////////////////////////////////
+
 #define SCREEN_HT             240
 #define SCREEN_WD             320
 
-#define GFX_GLIST_LEN         2048
-#define GFX_CLEAR_GLIST_LEN   512
+//////////////////////////////////////////////////////////////////////////////////////////
+// Data
+//////////////////////////////////////////////////////////////////////////////////////////
 
+// We only need one instance of FrameData per frame. Access it from g_FrameData after BeginFrame
 typedef struct {
-  Mtx     projection;
-  Mtx     modeling;
-  Mtx     translate;
+  Mtx projection;
 } FrameData_t;
 
-// todo: collapse into one.
+// Local transformation matricies, you need one per object you plan to render using xo_render_BeginDraw
 typedef struct {
   Mtx rotation;
   Mtx translation;
 } Transformation_t;
 
-extern FrameData_t g_FrameDataCollection[];
-extern FrameData_t* g_FrameData; // data for this frame.
+// data for this frame.
+extern FrameData_t* g_FrameData;
 
-extern void xo_render_Init(void);
+// Pointer to the active position in the active display list.
+// Assigned every time we call xo_render_BeginDisplayList_Render, for example.
+// Post-increment as you use it, example: gDPFullSync(g_Glist++);
+extern Gfx* g_Glist;
 
-extern void xo_render_BeginDisplayList_Clear(void);
-extern void xo_render_EndDisplayList_Clear(void);
+//////////////////////////////////////////////////////////////////////////////////////////
+// Setup and major begin/end calls
+//////////////////////////////////////////////////////////////////////////////////////////
 
-extern void xo_render_BeginDisplayList_Render(void);
-extern void xo_render_EndDisplayList_Render(void);
+// Initialize the render code, call once at application startup
+void xo_render_Init(void);
 
-extern void xo_render_BeginDraw(Transformation_t* t);
-extern void xo_render_EndDraw(void);
+// call before any rendering code in the current frame
+void xo_render_BeginFrame(void);
 
-extern void xo_render_Translate(Transformation_t* t, float x, float y, float z);
-extern void xo_render_Rotate(Transformation_t* t, float angle, float x, float y, float z);
+// call after all rendering code in the current frame
+void xo_render_EndFrame(void);
 
-extern void xo_render_DebugDraw(void);
-extern void xo_render_DebugLog(char const* msg);
+// begins the rendering display list. call this before any draw calls.
+void xo_render_BeginDisplayList_Render(void);
 
-extern void xo_render_Clear(void);
+// ends the rendering display list. call after draw calls (and after xo_render_BeginDisplayList_Render)
+void xo_render_EndDisplayList_Render(void);
 
-extern void xo_render_BeginFrame(void);
-extern void xo_render_EndFrame(void);
+//////////////////////////////////////////////////////////////////////////////////////////
+// Per-object calls for rendering
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// call after setting up your render objects transformation (t), and before actual render code.
+void xo_render_BeginDraw(Transformation_t* t);
+
+// call after render code, (and after xo_render_BeginDraw). If you have child objects to render, do that first.
+void xo_render_EndDraw(void);
+
+// apply translation of x y z to transformation t. This is not addative.
+void xo_render_Translate(Transformation_t* t, float x, float y, float z);
+
+// apply rotation (angle + axis x y z) to transformation t. This is not addative.
+void xo_render_Rotate(Transformation_t* t, float angle, float x, float y, float z);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Debug and misc.
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// Submits draw calls for debug drawing. You don't have to do this if you're using xo_render_EndFrame.
+void xo_render_DebugDraw(void);
+
+// Renders one line of debug text, as in-order immediate mode. Lines appear in the top left of the screen in call order.
+void xo_render_DebugLog(char const* msg);
+
 
 #endif // __XO_RENDER_H_
