@@ -78,5 +78,8 @@ void xo_render_DebugDraw(void);
 // Renders one line of debug text, as in-order immediate mode. Lines appear in the top left of the screen in call order.
 void xo_render_DebugLog(char const* msg);
 
+// Sets the clear color to an RGB value. You only have to do this as a state change, not every frame.
+void xo_render_SetClearColor(u8 r, u8 g, u8 b);
+
 
 #endif // __XO_RENDER_H_

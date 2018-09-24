@@ -78,7 +78,9 @@ static void xo_render_BeginDisplayList_Clear(void)
 static void xo_render_EndDisplayList_Clear(void)
 {
   // this can fail on overflow or when using the wrong Glist
-  assert(g_Glist > &s_GlistClear[0] && g_Glist < &s_GlistClear[GLIST_CLEAR_LENGTH]);
+#ifdef DNU_DEBUG
+  assert(g_Glist > (Gfx*)&s_GlistClear[0] && g_Glist < (Gfx*)&s_GlistClear[GLIST_CLEAR_LENGTH]);
+#endif
 
   gDPFullSync(g_Glist++);
   gSPEndDisplayList(g_Glist++);
