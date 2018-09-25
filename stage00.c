@@ -8,20 +8,28 @@
 #include <nusys.h>
 #include "main.h"
 #include "xo-render.h"
+#include "xo-controller.h"
 
-static float triPos_x; /* The display position, X */
-static float triPos_y; /* The display position, Y */
-static float theta;  /* The rotational angle of the square  */
-static Transformation_t parentSquare, childSquare, grandchildSquare;
+static struct
+{
+  f32
+      triPos_x,
+      triPos_y,
+      theta;
+  Transformation_t
+      parentSquare,
+      childSquare,
+      grandchildSquare;
+} s_Stage00;
 
 void shadetri();
 
 /* The initialization of stage 0  */
 void initStage00(void)
 {
-  triPos_x = 0.0;
-  triPos_y = 0.0;
-  theta = 0.0;
+  s_Stage00.triPos_x = 0.0;
+  s_Stage00.triPos_y = 0.0;
+  s_Stage00.theta = 0.0;
 }
 
 void makeDL00(void)
@@ -31,19 +39,19 @@ void makeDL00(void)
   xo_render_BeginDisplayList_Render();
 
   {
-    xo_render_Translate(&parentSquare, triPos_x, triPos_y, 0.0F);
-    xo_render_Rotate(&parentSquare, theta, 0.0F, 0.0F, 1.0F);
-    xo_render_BeginDraw(&parentSquare);
+    xo_render_Translate(&s_Stage00.parentSquare, s_Stage00.triPos_x, s_Stage00.triPos_y, 0.0F);
+    xo_render_Rotate(&s_Stage00.parentSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+    xo_render_BeginDraw(&s_Stage00.parentSquare);
     shadetri();
     {
-      xo_render_Translate(&childSquare, 25.f, 0.0f, 0.0F);
-      xo_render_Rotate(&childSquare, theta, 0.0F, 0.0F, 1.0F);
-      xo_render_BeginDraw(&childSquare);
+      xo_render_Translate(&s_Stage00.childSquare, 25.f, 0.0f, 0.0F);
+      xo_render_Rotate(&s_Stage00.childSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&s_Stage00.childSquare);
       shadetri();
       {
-        xo_render_Translate(&grandchildSquare, 2.5f, 0.0f, 0.0F);
-        xo_render_Rotate(&grandchildSquare, theta, 0.0F, 0.0F, 1.0F);
-        xo_render_BeginDraw(&grandchildSquare);
+        xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
+        xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+        xo_render_BeginDraw(&s_Stage00.grandchildSquare);
         shadetri();
         xo_render_EndDraw();
       }
@@ -57,62 +65,59 @@ void makeDL00(void)
   xo_render_EndFrame();
 }
 
-/* The game progressing process for stage 0 */
 void updateGame00(void)
 {
-  static float vel = 1.0;
+  u8 i;
+  static f32 vel = 1.0;
 
-  /* Data reading of controller 1  */
-  nuContDataGetEx(contdata,0);
+  xo_controller_Update();
 
-  /* Change the display position according to stick data  */
-  triPos_x = contdata->stick_x;
-  triPos_y = contdata->stick_y;
+  for (i = 0; i < NU_CONT_MAXCONTROLLERS; ++i)
+  {
+    if (xo_contoller_IsConnected(i))
+    {
+      xo_controller_GetAxisUnclamped(i, XO_AXIS_STICK, &s_Stage00.triPos_x, &s_Stage00.triPos_y);
+      s_Stage00.triPos_x *= 80.f;
+      s_Stage00.triPos_y *= 80.f;
 
-  /* The reverse rotation by the A button  */
-  if(contdata[0].trigger & A_BUTTON)
-    vel = -vel;
+      if (xo_controller_ButtonPressed(i, XO_BUTTON_A))
+        vel = -vel;
 
-  /* Rotate fast while the B button is pushed  */
-  if(contdata[0].button & B_BUTTON)
-    theta += vel * 3.0;
-  else
-    theta += vel;
+      if (xo_controller_ButtonDown(i, XO_BUTTON_B))
+        s_Stage00.theta += vel * 3.0;
+      else
+        s_Stage00.theta += vel;
 
-  /* Change the pending check when the Z button is pushed  */
-  if(contdata[0].trigger & Z_TRIG)
-    pendflag ^= 1;
+      if (xo_controller_ButtonPressed(i, XO_BUTTON_TRIGGER_Z))
+        pendflag ^= 1;
 
-
-  /* Move to stage 1 when the start button is pushed  */
-  if(contdata[0].trigger & START_BUTTON){
-    /* Remove the call-back function. */
-    nuGfxFuncRemove();
-    /* Specify next stage to main  */
-    stage = 1;
+      if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+      {
+        nuGfxFuncRemove();
+        stage = 1;
+      }
+      // finish once we've updated with the first controller.
+      break;
+    }
   }
 }
 
-/* The vertex coordinate  */
-static Vtx shade_vtx[] =  {
-        {        -64,  64, -5, 0, 0, 0, 0, 0xff, 0, 0xff	},
-        {         64,  64, -5, 0, 0, 0, 0, 0, 0, 0xff	},
-        {         64, -64, -5, 0, 0, 0, 0, 0, 0xff, 0xff	},
-        {        -64, -64, -5, 0, 0, 0, 0xff, 0, 0, 0xff	},
+static Vtx shade_vtx[] = {
+    {.v = {.ob = {-64, 64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_green}}},
+    {.v = {.ob = {64, 64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_black}}},
+    {.v = {.ob = {64, -64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_blue}}},
+    {.v = {.ob = {-64, -64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_red}}},
 };
 
-/* Draw a square  */
 void shadetri()
 {
-  int i;
-
-  gSPVertex(g_Glist++,&(shade_vtx[0]),4, 0);
+  gSPVertex(g_Glist++, &(shade_vtx[0]), 4, 0);
 
   gDPPipeSync(g_Glist++);
-  gDPSetCycleType(g_Glist++,G_CYC_1CYCLE);
-  gDPSetRenderMode(g_Glist++,G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-  gSPClearGeometryMode(g_Glist++,0xFFFFFFFF);
-  gSPSetGeometryMode(g_Glist++,G_SHADE| G_SHADING_SMOOTH);
+  gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
+  gDPSetRenderMode(g_Glist++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+  gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
+  gSPSetGeometryMode(g_Glist++, G_SHADE | G_SHADING_SMOOTH);
 
-  gSP2Triangles(g_Glist++,0,1,2,0,0,2,3,0);
+  gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
 }

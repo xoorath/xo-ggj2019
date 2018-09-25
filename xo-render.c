@@ -36,7 +36,7 @@ static Gfx setup_rspstate[] = {
 static u32 s_ClearColor;
 static Gfx s_GlistClear[2][GLIST_CLEAR_LENGTH];
 static Gfx s_GlistRender[2][GLIST_RENDER_LENGTH];
-static int s_DebugLineNum = 1;
+static s32 s_DebugLineNum = 1;
 static u32 s_TaskNumber = 0;
 static FrameData_t s_FrameDataCollection[2];
 static Mtx s_RootTransformation;
@@ -118,8 +118,8 @@ void xo_render_BeginDisplayList_Render(void)
   xo_render_InitRCP();
 
   guOrtho(&g_FrameData->projection,
-          -(float)SCREEN_WD / 2.0F, (float)SCREEN_WD / 2.0F,
-          -(float)SCREEN_HT / 2.0F, (float)SCREEN_HT / 2.0F,
+          -(f32)SCREEN_WD / 2.0F, (f32)SCREEN_WD / 2.0F,
+          -(f32)SCREEN_HT / 2.0F, (f32)SCREEN_HT / 2.0F,
           1.0F, 10.0F, 1.0F);
 
   gSPMatrix(g_Glist++, OS_K0_TO_PHYSICAL(&g_FrameData->projection),
@@ -155,12 +155,12 @@ void xo_render_EndDraw(void)
   gSPPopMatrix(g_Glist++, G_MTX_MODELVIEW);
 }
 
-void xo_render_Translate(Transformation_t *t, float x, float y, float z)
+void xo_render_Translate(Transformation_t *t, f32 x, f32 y, f32 z)
 {
   guTranslate(&t->translation, x, y, z);
 }
 
-void xo_render_Rotate(Transformation_t *t, float angle, float x, float y, float z)
+void xo_render_Rotate(Transformation_t *t, f32 angle, f32 x, f32 y, f32 z)
 {
   guRotate(&t->rotation, angle, x, y, z);
 }

@@ -33,6 +33,11 @@ extern FrameData_t* g_FrameData;
 // Post-increment as you use it, example: gDPFullSync(g_Glist++);
 extern Gfx* g_Glist;
 
+#define xo_render_rgba_red    0xff, 0x00, 0x00, 0xff
+#define xo_render_rgba_green  0x00, 0xff, 0x00, 0xff
+#define xo_render_rgba_blue   0x00, 0x00, 0xff, 0xff
+#define xo_render_rgba_black  0x00, 0x00, 0x00, 0xff
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Setup and major begin/end calls
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -63,10 +68,10 @@ void xo_render_BeginDraw(Transformation_t* t);
 void xo_render_EndDraw(void);
 
 // apply translation of x y z to transformation t. This is not addative.
-void xo_render_Translate(Transformation_t* t, float x, float y, float z);
+void xo_render_Translate(Transformation_t* t, f32 x, f32 y, f32 z);
 
 // apply rotation (angle + axis x y z) to transformation t. This is not addative.
-void xo_render_Rotate(Transformation_t* t, float angle, float x, float y, float z);
+void xo_render_Rotate(Transformation_t* t, f32 angle, f32 x, f32 y, f32 z);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Debug and misc.

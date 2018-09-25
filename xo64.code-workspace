@@ -21,6 +21,15 @@
       "*.tbl":true
     },
     "editor.renderWhitespace": "boundary",
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+      "xo-render.h": "c",
+      "nusys.h": "c",
+      "math.h": "c",
+      "ultra64.h": "c",
+      "ultratypes.h": "c",
+      "os.h": "c",
+      "os_cont.h": "c"
+    }
   }
 }

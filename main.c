@@ -1,17 +1,10 @@
-/*
-   main.c
-
-   NuSYSTEM sample nu5
-
-   Copyright (C) 1997-1999, NINTENDO Co,Ltd.
-*/
-
 #include <nusys.h>
 #include <nualsgi_n.h>
 #include "main.h"
 #include "segment.h"
+#include "xo-render.h"
+#include "xo-controller.h"
 
-/* The stage number */
 volatile int stage;
 
 /* Declaration of the prototype */
@@ -28,11 +21,11 @@ void initStage01(void);
 void makeDL01(void);
 void updateGame01(void);
 
-NUContData contdata[1]; /* Read data of 1 controller */
-/* Values 0 or 1 used by pending check of the call-back function */
+// Values 0 or 1 used by pending check of the call-back function
 volatile int pendflag = 0;
 static int oldpendflag = 1;
-/* Frame buffer (2 frame buffers) */
+
+// Frame buffers
 static u16 *FrameBuf2[2] = {
     (u16 *)NU_GFX_FRAMEBUFFER1_ADDR,
     (u16 *)NU_GFX_FRAMEBUFFER2_ADDR,
@@ -45,51 +38,33 @@ static u16 *FrameBuf3[3] = {
 };
 /* The number of displaying scene in a second */
 int dspcount = 0;
-/* The buffer for the console display */
-char conbuf[40];
+
 
 /*------------------------
   Main
 --------------------------*/
 void mainproc(void)
 {
-  /* The initialization of graphic */
   nuGfxInit();
 
   xo_render_Init();
+  xo_controller_Init();
 
-  /* The initialization of the controller manager */
-  nuContInit();
-
-  /* The initializatio of audio */
   nuAuInit();
-  /* Register audio data on ROM */
   setAudioData();
-
   nuAuSeqPlayerSetNo(0, 0);
   nuAuSeqPlayerPlay(0);
 
-  /* Set the stage number to 0 */
   stage = 0;
 
   while (1)
   {
     switch (stage)
     {
-      /*
-       Register the corresponding call-back function according to the
-     stage number.
-       The call-back function sets the value to the stage when another    	     call-back function needs the register change.
-       */
     case 0:
-      /* Set the stage value to -1 first to wait for that the call-back
-       function sets the value stage */
       stage = -1;
-      /* The initialization of stage 0 */
       initStage00();
-      /* Call-back register */
       nuGfxFuncSet((NUGfxFunc)stage00);
-      /* Start to display */
       nuGfxDisplayOn();
       break;
     case 1:

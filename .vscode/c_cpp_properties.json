@@ -4,9 +4,12 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
+                "C:\\nintendo\\n64kit\\mfs\\include",
+                "C:\\nintendo\\n64kit\\niff\\include",
                 "C:\\nintendo\\n64kit\\nusys\\include",
                 "C:\\nintendo\\n64kit\\nustd\\include",
-                "C:\\ultra\\usr\\include"
+                "C:\\ultra\\usr\\include",
+                "C:\\ultra\\GCC\\MIPSE\\INCLUDE"
             ],
             "defines": [
                 "DNU_DEBUG",

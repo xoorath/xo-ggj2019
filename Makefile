@@ -31,7 +31,7 @@ TARGETS =	build/project.n64
 
 HFILES =	main.h segment.h
 
-CODEFILES   = 	main.c stage00.c stage01.c xo-render.c
+CODEFILES   = 	main.c stage00.c stage01.c xo-render.c xo-controller.c
 
 CODEOBJECTS =	$(CODEFILES:.c=.o)  $(NUSYSLIBDIR)/nusys.o
 
