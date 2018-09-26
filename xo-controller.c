@@ -2,6 +2,7 @@
 #include "xo-math.h"
 #include <STRING.H>
 
+// TODO: Consider using the nusys controller code for current/last state checking.
 static OSContPad s_ControllersCurrent[NU_CONT_MAXCONTROLLERS];
 static OSContPad s_ControllersLast[NU_CONT_MAXCONTROLLERS];
 
@@ -21,19 +22,56 @@ void xo_controller_Update(void)
 
 u16 xo_contoller_IsConnected(u8 index)
 {
+  if(index > NU_CONT_MAXCONTROLLERS)
+  {
+    return FALSE;
+  }
+
   if(nuContStatus[index].errno)
   {
-    return 0;
+    return FALSE;
   }
 
   switch (nuContStatus[index].type & CONT_TYPE_MASK)
   {
   case CONT_TYPE_NORMAL:
-    return 1;
+    return TRUE;
   // A mouse, voice device, or something unknown
   default:
-    return 0;
+    return FALSE;
   }
+}
+
+u8 xo_controller_NumberConnected()
+{
+  u8 i;
+  u8 n = 0;
+  // don't just return nuContNum. we only want the number of actual gamepads ignoring special input devices.
+  for(i = 0; i < NU_CONT_MAXCONTROLLERS; ++i)
+  {
+    if(xo_contoller_IsConnected(i))
+    {
+      n++;
+    }
+  }
+  return n;
+}
+
+u8 xo_controller_GetIndex(u8 nthController)
+{
+  u8 i; // actual index
+  u8 n; // valid controller index
+  for(i=0,n=0; i < NU_CONT_MAXCONTROLLERS; ++i) {
+    if(xo_contoller_IsConnected(i))
+    {
+      if(n == nthController)
+      {
+        return i;
+      }
+      n++;
+    }
+  }
+  return 0xff;
 }
 
 u16 xo_controller_ButtonDown(u8 index, Button_t button)
