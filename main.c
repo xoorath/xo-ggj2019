@@ -2,15 +2,16 @@
 #include <nualsgi_n.h>
 #include "main.h"
 #include "segment.h"
-#include "xo-render.h"
+#include "xo-audio.h"
 #include "xo-controller.h"
+#include "xo-render.h"
+#include "donsol-audio.h"
 
 volatile int stage;
 
 /* Declaration of the prototype */
 void stage00(int);
 void stage01(int);
-void setAudioData(void);
 
 /* Declaration of the external function */
 void initStage00(void);
@@ -49,11 +50,10 @@ void mainproc(void)
 
   xo_render_Init();
   xo_controller_Init();
-
-  nuAuInit();
-  setAudioData();
-  nuAuSeqPlayerSetNo(0, 0);
-  nuAuSeqPlayerPlay(0);
+  xo_audio_Init();
+  donsol_audio_Init();
+  
+  donsol_audio_PlayMainSong();
 
   stage = 0;
 
@@ -86,20 +86,6 @@ void mainproc(void)
   }
 }
 
-/* Set audio data */
-void setAudioData(void)
-{
-  /* Register the bank to the sequence player */
-  nuAuSeqPlayerBankSet(_midibankSegmentRomStart,
-                       _midibankSegmentRomEnd - _midibankSegmentRomStart,
-                       _miditableSegmentRomStart);
-  /* Register MIDI sequence data to the sequence player */
-  nuAuSeqPlayerSeqSet(_seqSegmentRomStart);
-  /* Register the bank to the sound player */
-  nuAuSndPlayerBankSet(_sfxbankSegmentRomStart,
-                       _sfxbankSegmentRomEnd - _sfxbankSegmentRomStart,
-                       _sfxtableSegmentRomStart);
-}
 
 /*-----------------------------------------------------------------------------
   The call-back function

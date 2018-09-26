@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "gen.n6401.h": "c"
+        "gen.n6401.h": "c",
+        "nualsgi_n.h": "c"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled"
   }
