@@ -1,6 +1,6 @@
 #include "donsol-audio.h"
-#include <nualsgi_n.h>
 #include <nusys.h>
+#include <nualsgi_n.h>
 
 void donsol_audio_Init(void)
 {
@@ -12,10 +12,10 @@ void donsol_audio_Init(void)
   // Register MIDI sequence data to the sequence player
   nuAuSeqPlayerSeqSet(_seqSegmentRomStart);
 
-  // Register the bank to the sound player 
+  // Register the bank to the sound player
   nuAuSndPlayerBankSet(_sfxbankSegmentRomStart,
                        _sfxbankSegmentRomEnd - _sfxbankSegmentRomStart,
-                       _sfxtableSegmentRomStart); 
+                       _sfxtableSegmentRomStart);
 }
 
 void donsol_audio_PlayMainSong(void)
