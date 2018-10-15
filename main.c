@@ -51,9 +51,6 @@ void mainproc(void)
   xo_render_Init();
   xo_controller_Init();
   xo_audio_Init();
-  donsol_audio_Init();
-  
-  donsol_audio_PlayMainSong();
 
   stage = 0;
 

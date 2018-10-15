@@ -3,6 +3,10 @@
 
 #include <PR/ultratypes.h>
 
+#define xo_spec_DeclareCodeSegment() \
+  extern char _codeSegmentStart[]; \
+  extern char _codeSegmentEnd[];
+
 #define xo_spec_DeclareRomSegment(romSegmentName) \
   extern u8 _##romSegmentName##SegmentRomStart[]; \
   extern u8 _##romSegmentName##SegmentRomEnd[];

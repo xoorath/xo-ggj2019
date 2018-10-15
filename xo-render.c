@@ -19,14 +19,18 @@ static Vp vp = {
 
 static Gfx setup_rdpstate[] = {
     gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
+#ifndef __INTELLISENSE__ // ignore SHADE warning
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+#endif
     gsDPSetScissor(G_SC_NON_INTERLACE, 0, 0, SCREEN_WD, SCREEN_HT),
     gsDPSetColorDither(G_CD_BAYER),
     gsSPEndDisplayList(),
 };
 
 static Gfx setup_rspstate[] = {
+#ifndef __INTELLISENSE__ // ignore int truncation warning
     gsSPViewport(&vp),
+#endif
     gsSPClearGeometryMode(0xFFFFFFFF),
     gsSPSetGeometryMode(G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH | G_CULL_BACK),
     gsSPTexture(0, 0, 0, 0, G_OFF),
@@ -134,7 +138,7 @@ void xo_render_EndDisplayList_Render(void)
   gSPPopMatrix(g_Glist++, G_MTX_MODELVIEW); // pop root transform
 
   // this can fail on overflow or when using the wrong Glist
-  assert(g_Glist > &s_GlistRender[0] && g_Glist < &s_GlistRender[GLIST_RENDER_LENGTH]);
+  assert(g_Glist > (Gfx*)&s_GlistRender[0] && g_Glist < (Gfx*)&s_GlistRender[GLIST_RENDER_LENGTH]);
 
   gDPFullSync(g_Glist++);
   gSPEndDisplayList(g_Glist++);

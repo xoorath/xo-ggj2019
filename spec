@@ -6,11 +6,11 @@
   	0x80000000  exception vectors, ...
   	0x80000400  zbuffer (size 320*240*2)
   	0x80025c00  codesegment
-	      :  
+	      :
   	0x8030F800  Audio Heap
   	0x8038F800  cfb 16b 3buffer (size 320*240*2*3)
 
-   	Copyright (C) 1997-1999, NINTENDO Co,Ltd.	
+   	Copyright (C) 1997-1999, NINTENDO Co,Ltd.
 */
 
 #include <nusys.h>
@@ -34,41 +34,55 @@ beginseg
 endseg
 
 beginseg
-	name "midibank"
-	flags RAW
-	include "wave.ctl"
+  name "donsolptr"
+  flags RAW
+  include "gamesnd.ptr"
 endseg
 
 beginseg
-	name "miditable"
-	flags RAW
-	include "wave.tbl"
+  name "donsolwbank"
+  flags RAW
+  include "gamesnd.wbk"
 endseg
 
 beginseg
-	name "seq"
-	flags RAW
-	include "midi.sbk"  
+  name "donsolbin"
+  flags RAW
+  include "ambient.bin"
 endseg
 
 beginseg
-	name "sfxbank"
-	flags RAW
-	include "se.ctl"
+  name "donsolbfx"
+  flags RAW
+  include "gamesnd.bfx"
 endseg
 
 beginseg
-	name "sfxtable"
-	flags RAW
-	include "se.tbl"
+  name "countptr"
+  flags RAW
+  include "count.ptr"
+endseg
+
+beginseg
+  name "countwbank"
+  flags RAW
+  include "count.wbk"
+endseg
+
+beginseg
+  name "countbin"
+  flags RAW
+  include "count.bin"
 endseg
 
 beginwave
-	name	"nu5"
-	include	"code"
-	include "miditable"
-	include "midibank"
-	include "sfxbank"
-	include "sfxtable"
-	include "seq"
+  name	"nu5"
+  include	"code"
+  include "donsolptr"
+  include "donsolwbank"
+  include "donsolbin"
+  include "donsolbfx"
+  include "countptr"
+  include "countwbank"
+  include "countbin"
 endwave

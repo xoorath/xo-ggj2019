@@ -16,7 +16,7 @@ static struct
       childSquare,
       grandchildSquare;
 
-  u8 
+  u8
     controllerPluggedIn;
 } s_Stage00;
 
@@ -30,6 +30,8 @@ void initStage00(void)
   s_Stage00.theta = 0.0;
   // note: transformations are set before they're used. don't bother setting them here.
   s_Stage00.controllerPluggedIn = FALSE;
+  donsol_audio_Init();
+  donsol_audio_PlayMainSong();
 }
 
 void makeDL00(void)

@@ -1,17 +1,16 @@
 /*
    segment.h
 
-   Declare external reference of the segment symbol that makerom outputs 
+   Declare external reference of the segment symbol that makerom outputs
 
-   Copyright (C) 1997-1999, NINTENDO Co,Ltd.	
+   Copyright (C) 1997-1999, NINTENDO Co,Ltd.
 */
 
 
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-extern char _codeSegmentStart[];         /* code segment start */
-extern char _codeSegmentEnd[];           /* code segment end */
+
 
 //extern u8 _seqSegmentRomStart[];
 //extern u8 _seqSegmentRomEnd[];

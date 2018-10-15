@@ -29,7 +29,13 @@
       "ultra64.h": "c",
       "ultratypes.h": "c",
       "os.h": "c",
-      "os_cont.h": "c"
+      "os_cont.h": "c",
+      "nualstl_n.h": "c",
+      "nualstl.h": "c",
+      "libmus_data.h": "c",
+      "donsol-audio.h": "c",
+      "n64st1.h": "c",
+      "gamesnd.h": "c"
     }
   }
 }

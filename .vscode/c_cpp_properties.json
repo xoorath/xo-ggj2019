@@ -9,12 +9,15 @@
                 "C:\\nintendo\\n64kit\\nusys\\include",
                 "C:\\nintendo\\n64kit\\nustd\\include",
                 "C:\\ultra\\usr\\include",
-                "C:\\ultra\\GCC\\MIPSE\\INCLUDE"
+                "C:\\ultra\\GCC\\MIPSE\\INCLUDE",
+                "C:\\N64Tools\\lib",
+                "C:\\N64Tools\\lib\\vscode_binding"
             ],
             "defines": [
                 "DNU_DEBUG",
                 "DF3DEX_GBI_2",
-                "_LANGUAGE_C"
+                "_LANGUAGE_C",
+                "_MIPS_SZLONG=32"
             ]
         }
     ],

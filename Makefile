@@ -16,7 +16,7 @@ CC  = gcc
 LD  = ld
 MAKEROM = mild
 
-NUAUDIOLIB = -lnualsgi_n_d -lgn_audio_d
+NUAUDIOLIB = -lnualstl_n_d -ln_gmus_d -ln_gaudio_sc
 
 LCDEFS =	-DNU_DEBUG -DF3DEX_GBI_2
 LCINCS =	-I. -I$(NUSYSINCDIR) -I$(ROOT)/usr/include/PR
@@ -29,9 +29,9 @@ APP =		build/project.out
 
 TARGETS =	build/project.n64
 
-HFILES =	main.h segment.h
+HFILES = donsol-audio.h donsol-card.h gamesnd.h main.h segment.h xo-audio.h xo-controller.h xo-math.h xo-render.h xo-spec.h
 
-CODEFILES   = 	main.c stage00.c stage01.c xo-render.c xo-controller.c xo-audio.c donsol-audio.c donsol-card.c
+CODEFILES = donsol-audio.c donsol-card.c main.c stage00.c stage01.c xo-audio.c xo-controller.c xo-render.c
 
 CODEOBJECTS =	$(CODEFILES:.c=.o)  $(NUSYSLIBDIR)/nusys.o
 

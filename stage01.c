@@ -15,7 +15,7 @@ static struct
       parentSquare,
       childSquare;
 
-  u8 
+  u8
     controllerPluggedIn;
 } s_Stage01;
 
@@ -29,6 +29,8 @@ void initStage01(void)
   s_Stage01.theta = 0.0;
 
   s_Stage01.controllerPluggedIn = FALSE;
+  donsol_audio_Init();
+  donsol_audio_PlayMainSong();
 }
 
 /* Make the display list for stage 1 and activate the task */
