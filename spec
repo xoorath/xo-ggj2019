@@ -75,9 +75,17 @@ beginseg
   include "count.bin"
 endseg
 
+beginseg
+	name	"heartace"
+	after code
+	flags	OBJECT
+	include "img-donsol-heart-ace.o"
+endseg
+
 beginwave
   name	"nu5"
   include	"code"
+  include "heartace"
   include "donsolptr"
   include "donsolwbank"
   include "donsolbin"

@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
+#include "xo-img.h"
 #include "xo-render.h"
 #include "xo-controller.h"
 
@@ -21,6 +22,8 @@ static struct
 } s_Stage00;
 
 void shadetri();
+void shadetri_1();
+void shadetri_2();
 
 /* The initialization of stage 0  */
 void initStage00(void)
@@ -49,11 +52,15 @@ void makeDL00(void)
       xo_render_Translate(&s_Stage00.childSquare, 25.f, 0.0f, 0.0F);
       xo_render_Rotate(&s_Stage00.childSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
       xo_render_BeginDraw(&s_Stage00.childSquare);
-      shadetri();
+      xo_img_Bind(&img_donsol_heart_ace);
+      shadetri_1();
+      xo_img_Bind2(&img_donsol_heart_ace);
+      shadetri_2();
       {
         xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
         xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
         xo_render_BeginDraw(&s_Stage00.grandchildSquare);
+        //xo_img_Bind(NULL);
         shadetri();
         xo_render_EndDraw();
       }
@@ -112,12 +119,16 @@ void updateGame00(void)
   }
 }
 
+#define tcN 31 << 6
+#define tcF 0 << 6
 static Vtx shade_vtx[] = {
-    {.v = {.ob = {-64, 64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_green}}},
-    {.v = {.ob = {64, 64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_black}}},
-    {.v = {.ob = {64, -64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_blue}}},
-    {.v = {.ob = {-64, -64, -5}, .flag = 0, .tc = {0, 0}, .cn = {xo_render_rgba_red}}},
+    {.v = {.ob = {-64, 64, -5},  .flag = 0, .tc = {tcN, tcN}, .cn = {xo_render_rgba_green}}},
+    {.v = {.ob = {64, 64, -5},   .flag = 0, .tc = {tcN, tcF}, .cn = {xo_render_rgba_black}}},
+    {.v = {.ob = {64, -64, -5},  .flag = 0, .tc = {tcF, tcN}, .cn = {xo_render_rgba_blue}}},
+    {.v = {.ob = {-64, -64, -5}, .flag = 0, .tc = {tcF, tcF}, .cn = {xo_render_rgba_red}}},
 };
+#undef tcN
+#undef tcF
 
 void shadetri()
 {
@@ -127,7 +138,37 @@ void shadetri()
   gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
   gDPSetRenderMode(g_Glist++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
   gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
-  gSPSetGeometryMode(g_Glist++, G_SHADE | G_SHADING_SMOOTH);
+  // was: G_SHADE | G_SHADING_SMOOTH
+  gSPSetGeometryMode(g_Glist++,
+  //G_LIGHTING |
+  //G_ZBUFFER |
+   G_SHADE | G_SHADING_SMOOTH
+		       //| G_CULL_BACK
+           );
+
+  gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
+}
+
+
+void shadetri_1()
+{
+  gSPVertex(g_Glist++, &(shade_vtx[0]), 4, 0);
+
+  gDPPipeSync(g_Glist++);
+  gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
+  gDPSetRenderMode(g_Glist++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+  gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
+  // was: G_SHADE | G_SHADING_SMOOTH
+  gSPSetGeometryMode(g_Glist++,
+  //G_LIGHTING |
+  //G_ZBUFFER |
+   G_SHADE | G_SHADING_SMOOTH
+		       //| G_CULL_BACK
+           );
+}
+
+void shadetri_2()
+{
 
   gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
 }
