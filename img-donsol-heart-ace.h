@@ -2,10 +2,8 @@
 #define Heart_Ace_header
 
 #include <PR/ultratypes.h>
-extern unsigned short Heart_Ace_1[];
-extern unsigned short Heart_Ace_2[];
+#include "xo-spec.h"
 
-extern u8 _heartaceSegmentRomStart[];
-extern u8 _heartaceSegmentRomEnd[];
+xo_spec_DeclareRomSegment(heartace);
 
 #endif

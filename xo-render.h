@@ -37,6 +37,7 @@ extern Gfx* g_Glist;
 #define xo_render_rgba_green  0x00, 0xff, 0x00, 0xff
 #define xo_render_rgba_blue   0x00, 0x00, 0xff, 0xff
 #define xo_render_rgba_black  0x00, 0x00, 0x00, 0xff
+#define xo_render_rgba_white  0xff, 0xff, 0xff, 0xff
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Setup and major begin/end calls

@@ -56,14 +56,14 @@ void makeDL00(void)
       shadetri_1();
       xo_img_Bind2(&img_donsol_heart_ace);
       shadetri_2();
-      {
-        xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
-        xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
-        xo_render_BeginDraw(&s_Stage00.grandchildSquare);
-        //xo_img_Bind(NULL);
-        shadetri();
-        xo_render_EndDraw();
-      }
+      xo_img_Bind(NULL);
+      //{
+      //  xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
+      //  xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+      //  xo_render_BeginDraw(&s_Stage00.grandchildSquare);
+      //  shadetri();
+      //  xo_render_EndDraw();
+      //}
       xo_render_EndDraw();
     }
     xo_render_EndDraw();
@@ -98,19 +98,21 @@ void updateGame00(void)
     if (xo_controller_ButtonPressed(i, XO_BUTTON_A))
       vel = -vel;
 
-    if (xo_controller_ButtonDown(i, XO_BUTTON_B))
-      s_Stage00.theta += vel * 3.0;
-    else
-      s_Stage00.theta += vel;
+    s_Stage00.theta = 0.f;
+
+    //if (xo_controller_ButtonDown(i, XO_BUTTON_B))
+    //  s_Stage00.theta += vel * 3.0;
+    //else
+    //  s_Stage00.theta += vel;
 
     if (xo_controller_ButtonPressed(i, XO_BUTTON_TRIGGER_Z))
       pendflag ^= 1;
 
-    if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
-    {
-      nuGfxFuncRemove();
-      stage = 1;
-    }
+    //if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    //{
+    //  nuGfxFuncRemove();
+    //  stage = 1;
+    //}
   }
   else
   {
@@ -119,13 +121,13 @@ void updateGame00(void)
   }
 }
 
-#define tcN 31 << 6
-#define tcF 0 << 6
+#define tcN 0 << 6
+#define tcF 31 << 6
 static Vtx shade_vtx[] = {
-    {.v = {.ob = {-64, 64, -5},  .flag = 0, .tc = {tcN, tcN}, .cn = {xo_render_rgba_green}}},
-    {.v = {.ob = {64, 64, -5},   .flag = 0, .tc = {tcN, tcF}, .cn = {xo_render_rgba_black}}},
-    {.v = {.ob = {64, -64, -5},  .flag = 0, .tc = {tcF, tcN}, .cn = {xo_render_rgba_blue}}},
-    {.v = {.ob = {-64, -64, -5}, .flag = 0, .tc = {tcF, tcF}, .cn = {xo_render_rgba_red}}},
+    {.v = {.ob = {-64, 64, -5},  .flag = 0, .tc = {tcN, tcN}, .cn = {xo_render_rgba_white}}},
+    {.v = {.ob = {64, 64, -5},   .flag = 0, .tc = {tcF, tcN}, .cn = {xo_render_rgba_white}}},
+    {.v = {.ob = {64, -64, -5},  .flag = 0, .tc = {tcF, tcF}, .cn = {xo_render_rgba_white}}},
+    {.v = {.ob = {-64, -64, -5}, .flag = 0, .tc = {tcN, tcF}, .cn = {xo_render_rgba_white}}},
 };
 #undef tcN
 #undef tcF
@@ -156,7 +158,7 @@ void shadetri_1()
 
   gDPPipeSync(g_Glist++);
   gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
-  gDPSetRenderMode(g_Glist++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+  gDPSetRenderMode(g_Glist++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
   gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
   // was: G_SHADE | G_SHADING_SMOOTH
   gSPSetGeometryMode(g_Glist++,
