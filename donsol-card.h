@@ -56,29 +56,34 @@ inline u8 donsol_card_IsNumeric(card_t card)
   return (card & CARD_MASK) <= CARD_10;
 }
 
+inline u8 donsol_card_GetSuit(card_t card)
+{
+  return (card & SUIT_MASK);
+}
+
 inline u8 donsol_card_IsHearts(card_t card)
 {
-  return (card & SUIT_MASK) == SUIT_HEARTS;
+  return donsol_card_GetSuit(card) == SUIT_HEARTS;
 }
 
 inline u8 donsol_card_IsDiamonds(card_t card)
 {
-  return (card & SUIT_MASK) == SUIT_DIAMONDS;
+  return donsol_card_GetSuit(card) == SUIT_DIAMONDS;
 }
 
 inline u8 donsol_card_IsSpades(card_t card)
 {
-  return (card & SUIT_MASK) == SUIT_SPADES;
+  return donsol_card_GetSuit(card) == SUIT_SPADES;
 }
 
 inline u8 donsol_card_IsClubs(card_t card)
 {
-  return (card & SUIT_MASK) == SUIT_CLUBS;
+  return donsol_card_GetSuit(card) == SUIT_CLUBS;
 }
 
 inline u8 donsol_card_IsFlipped(card_t card)
 {
-  return (card & SUIT_MASK) == SUIT_CLUBS;
+  return !!(card & CARDSTATE_FLIPPED);
 }
 
 void donsol_card_ClearFlippedBit();

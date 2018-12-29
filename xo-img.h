@@ -17,8 +17,6 @@ typedef struct {
   u32 filter; // G_TF_POINT | G_TF_BILERP
 } Img_t;
 
-extern Img_t img_donsol_heart_ace;
-
 void xo_img_Bind(Img_t *img, u8 segment);
 void xo_img_Unbind(void);
 void xo_img_Apply(Img_t *img, u8 segment);

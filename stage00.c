@@ -4,6 +4,7 @@
 #include "xo-img.h"
 #include "xo-render.h"
 #include "xo-controller.h"
+#include "img-donsol-heart-ace.h"
 
 static struct
 {

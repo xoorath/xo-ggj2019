@@ -1,5 +1,9 @@
 #include "donsol-card.h"
 
+#define GENERATED_IMAGE_DECLARATIONS
+#include "img-donsol-heart-ace.h"
+#undef GENERATED_IMAGE_DECLARATIONS
+
 card_t g_StartingDeck[] = {
     CARD_JO1,
     CARD_JO2,

@@ -35,7 +35,8 @@
       "libmus_data.h": "c",
       "donsol-audio.h": "c",
       "n64st1.h": "c",
-      "gamesnd.h": "c"
+      "gamesnd.h": "c",
+      "img-donsol-heart-ace.h": "c"
     }
   }
 }

@@ -6,22 +6,6 @@ static u8 img_buff[8200];
 
 void Rom2Ram(void *from_addr, void *to_addr, s32 seq_size);
 
-ImgSeg_t heart_ace_components[] = {
-  {
-    _heartaceSegmentRomStart,
-    _heartaceSegmentRomEnd,
-    32, 32,
-    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR
-  }
-};
-
-Img_t img_donsol_heart_ace = {
-  sizeof(heart_ace_components)/sizeof(heart_ace_components[0]),
-  heart_ace_components,
-
-  G_TF_POINT
-};
-
 void xo_img_Bind(Img_t *img, u8 segment)
 {
   ImgSeg_t* seg;
