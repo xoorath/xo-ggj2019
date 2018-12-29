@@ -19,7 +19,8 @@ static struct
     controllerPluggedIn;
 } s_Stage01;
 
-void shadetri();
+void BindMesh();
+void ApplyMesh();
 
 /* The initialization of stage 1 */
 void initStage01(void)
@@ -44,12 +45,14 @@ void makeDL01(void)
     xo_render_Translate(&s_Stage01.parentSquare, s_Stage01.triPos_x, s_Stage01.triPos_y, 0.0F);
     xo_render_Rotate(&s_Stage01.parentSquare, s_Stage01.theta, 0.0F, 0.0F, 1.0F);
     xo_render_BeginDraw(&s_Stage01.parentSquare);
-    shadetri();
+    BindMesh();
+    ApplyMesh();
     {
       xo_render_Translate(&s_Stage01.childSquare, 25.f, 0.0f, 0.0F);
       xo_render_Rotate(&s_Stage01.childSquare, s_Stage01.theta, 0.0F, 0.0F, 1.0F);
       xo_render_BeginDraw(&s_Stage01.childSquare);
-      shadetri();
+      BindMesh();
+      ApplyMesh();
       xo_render_EndDraw();
     }
     xo_render_EndDraw();

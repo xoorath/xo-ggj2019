@@ -15,15 +15,16 @@ static struct
   Transformation_t
       parentSquare,
       childSquare,
-      grandchildSquare;
+      grandchildSquare,
+      cardTop,
+      cardBottom;
 
   u8
     controllerPluggedIn;
 } s_Stage00;
 
-void shadetri();
-void shadetri_1();
-void shadetri_2();
+void BindMesh(void);
+void ApplyMesh(void);
 
 /* The initialization of stage 0  */
 void initStage00(void)
@@ -47,25 +48,39 @@ void makeDL00(void)
     xo_render_Translate(&s_Stage00.parentSquare, s_Stage00.triPos_x, s_Stage00.triPos_y, 0.0F);
     xo_render_Rotate(&s_Stage00.parentSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
     xo_render_BeginDraw(&s_Stage00.parentSquare);
-    shadetri();
+    BindMesh();
+    ApplyMesh();
     {
       xo_render_Translate(&s_Stage00.childSquare, 25.f, 0.0f, 0.0F);
       xo_render_Rotate(&s_Stage00.childSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
       xo_render_BeginDraw(&s_Stage00.childSquare);
-      xo_img_Bind(&img_donsol_heart_ace);
-      shadetri_1();
-      xo_img_Bind2(&img_donsol_heart_ace);
-      shadetri_2();
-      xo_img_Bind(NULL);
-      //{
-      //  xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
-      //  xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
-      //  xo_render_BeginDraw(&s_Stage00.grandchildSquare);
-      //  shadetri();
-      //  xo_render_EndDraw();
-      //}
+      xo_img_Bind(&img_donsol_heart_ace, 0);
+      BindMesh();
+      xo_img_Apply(&img_donsol_heart_ace, 0);
+      ApplyMesh();
+      xo_img_Bind(NULL, 0);
+      {
+        xo_render_Translate(&s_Stage00.grandchildSquare, 2.5f, 0.0f, 0.0F);
+        xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+        xo_render_BeginDraw(&s_Stage00.grandchildSquare);
+        BindMesh();
+        ApplyMesh();
+        xo_render_EndDraw();
+      }
       xo_render_EndDraw();
     }
+    xo_render_EndDraw();
+  }
+
+
+  {
+    xo_render_Translate(&s_Stage00.cardTop, 0.0f, 0.0f, 0.0F);
+    xo_render_Rotate(&s_Stage00.cardTop, 0.0F, 0.0F, 0.0F, 1.0F);
+    xo_render_BeginDraw(&s_Stage00.cardTop);
+    xo_img_Bind(&img_donsol_heart_ace, 0);
+    BindMesh();
+    xo_img_Apply(&img_donsol_heart_ace, 0);
+    ApplyMesh();
     xo_render_EndDraw();
   }
 
@@ -132,27 +147,8 @@ static Vtx shade_vtx[] = {
 #undef tcN
 #undef tcF
 
-void shadetri()
-{
-  gSPVertex(g_Glist++, &(shade_vtx[0]), 4, 0);
 
-  gDPPipeSync(g_Glist++);
-  gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
-  gDPSetRenderMode(g_Glist++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-  gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
-  // was: G_SHADE | G_SHADING_SMOOTH
-  gSPSetGeometryMode(g_Glist++,
-  //G_LIGHTING |
-  //G_ZBUFFER |
-   G_SHADE | G_SHADING_SMOOTH
-		       //| G_CULL_BACK
-           );
-
-  gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
-}
-
-
-void shadetri_1()
+void BindMesh()
 {
   gSPVertex(g_Glist++, &(shade_vtx[0]), 4, 0);
 
@@ -169,7 +165,7 @@ void shadetri_1()
            );
 }
 
-void shadetri_2()
+void ApplyMesh()
 {
 
   gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);

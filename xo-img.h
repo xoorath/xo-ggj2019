@@ -6,17 +6,21 @@
 typedef struct {
   u8* start;
   u8* end;
+  u32 w, h;
+  u32 txSettingU, txSettingV; // G_TX_CLAMP | G_TX_NOMIRROR
 } ImgSeg_t;
 
 typedef struct {
   u16 componentCount;
   ImgSeg_t* components;
+
+  u32 filter; // G_TF_POINT | G_TF_BILERP
 } Img_t;
 
 extern Img_t img_donsol_heart_ace;
 
-// Use this texture for any rendering that follows
-void xo_img_Bind(Img_t *img);
-void xo_img_Bind2(Img_t *img);
+void xo_img_Bind(Img_t *img, u8 segment);
+void xo_img_Unbind(void);
+void xo_img_Apply(Img_t *img, u8 segment);
 
 #endif
