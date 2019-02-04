@@ -36,7 +36,11 @@
       "donsol-audio.h": "c",
       "n64st1.h": "c",
       "gamesnd.h": "c",
-      "img-donsol-heart-ace.h": "c"
+      "img-donsol-heart-ace.h": "c",
+      "ramrom.h": "c",
+      "os_flash.h": "c",
+      "gu.h": "c",
+      "sp.h": "c"
     }
   }
 }

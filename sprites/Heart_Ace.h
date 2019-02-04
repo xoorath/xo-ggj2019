@@ -2,7 +2,7 @@
 // A tool by xoorath.
 //
 // Name: heart_ace
-// Size: 66 x 95
+// Size: 64 x 92
 // Type: 16-Bit RGBA (OUTFMT_RGBA_16)
 
 #ifndef _heart_ace_H_
@@ -22,25 +22,22 @@ extern Img_t heart_ace;
 
 ImgSeg_t heart_ace_components[] = {
   {
-    _heart_aceSegmentRomStart + 0/*o*/ ,
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2),
+    _heart_aceSegmentRomStart,
+    _heart_aceSegmentRomEnd,
     64, 32,
-    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR
   },
   {
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2),
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2) +  (64*32*2),
+    _heart_aceSegmentRomStart,
+    _heart_aceSegmentRomEnd,
     64, 32,
-    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR
   },
   {
-    _heart_aceSegmentRomStart + 0/*o*/ ,
+    _heart_aceSegmentRomStart,
     _heart_aceSegmentRomEnd,
     64, 28,
-    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR
   }
 }; // heart_ace_components
 

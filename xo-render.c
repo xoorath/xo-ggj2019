@@ -99,7 +99,7 @@ static void xo_render_EndDisplayList_Clear(void)
 void xo_render_Init(void)
 {
   guMtxIdent(&s_RootTransformation);
-  xo_render_SetClearColor(100, 149, 237);
+  xo_render_SetClearColor(32, 64, 32);
 }
 
 void xo_render_BeginFrame(void)

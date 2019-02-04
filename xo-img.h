@@ -8,6 +8,7 @@ typedef struct {
   u8* end;
   u32 w, h;
   u32 txSettingU, txSettingV; // G_TX_CLAMP | G_TX_NOMIRROR
+  void* data;
 } ImgSeg_t;
 
 typedef struct {
@@ -16,6 +17,9 @@ typedef struct {
 
   u32 filter; // G_TF_POINT | G_TF_BILERP
 } Img_t;
+
+void xo_img_Load(Img_t *img);
+void xo_img_Unload(Img_t *img);
 
 void xo_img_Bind(Img_t *img, u8 segment);
 void xo_img_Unbind(void);
