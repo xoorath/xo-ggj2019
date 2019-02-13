@@ -20,9 +20,11 @@ static struct
 
   u8
     controllerPluggedIn;
+
+  float theta;
 } s_Stage00;
 
-void BindMesh(void);
+void BindMesh(Vtx*, u16);
 void ApplyMesh(void);
 
 /* The initialization of stage 0  */
@@ -30,6 +32,7 @@ void initStage00(void)
 {
   s_Stage00.x = 0.0f;
   s_Stage00.y = 0.0f;
+  s_Stage00.theta = 0.0f;
   // note: transformations are set before they're used. don't bother setting them here.
   s_Stage00.controllerPluggedIn = FALSE;
   donsol_audio_Init();
@@ -76,26 +79,55 @@ void makeDL00(void)
   // }
 
   {
-    xo_render_Translate(&s_Stage00.parentSquare, s_Stage00.x, s_Stage00.y + 16.0f, 0.0F);
-    xo_render_Rotate(&s_Stage00.parentSquare, 0.0F, 0.0F, 0.0F, 1.0F);
-    xo_render_BeginDraw(&s_Stage00.parentSquare);
-    xo_img_Bind(&heart_ace, 0);
-    BindMesh();
-    xo_img_Apply(&heart_ace, 0);
-    ApplyMesh();
-    xo_img_Bind(NULL, 0);
-    xo_render_EndDraw();
-  }
+    xo_render_Translate(&s_Stage00.grandchildSquare, (int)s_Stage00.x, (int)s_Stage00.y, 0.0F);
+    xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
+    xo_render_BeginDraw(&s_Stage00.grandchildSquare);
 
-  {
-    xo_render_Translate(&s_Stage00.cardTop, s_Stage00.x, s_Stage00.y - 16.0f, 0.0F);
-    xo_render_Rotate(&s_Stage00.cardTop, 0.0F, 0.0F, 0.0F, 1.0F);
-    xo_render_BeginDraw(&s_Stage00.cardTop);
-    xo_img_Bind(&heart_ace, 1);
-    BindMesh();
-    xo_img_Apply(&heart_ace, 1);
-    ApplyMesh();
-    xo_img_Bind(NULL, 0);
+
+    // whole thing:
+    // 64 x 92
+    // each part:
+    // 64, 32,
+    // 64, 32,
+    // 64, 28
+
+    // center: 32, 46
+
+    {
+      xo_render_Translate(&s_Stage00.parentSquare, 0.0f, 28.f + 32.f + 16.f - 46.f, 0.0F);
+      xo_render_Rotate(&s_Stage00.parentSquare, 0.0f, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&s_Stage00.parentSquare);
+      xo_img_Bind(&heart_ace, 0);
+      BindMesh(heart_ace.components[0].mesh, 4);
+      xo_img_Apply(&heart_ace, 0);
+      ApplyMesh();
+      xo_img_Bind(NULL, 0);
+      xo_render_EndDraw();
+    }
+
+    {
+      xo_render_Translate(&s_Stage00.cardTop, 0.0f, 28.f + 16.f - 46.f, 0.0F);
+      xo_render_Rotate(&s_Stage00.cardTop, 0.0f, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&s_Stage00.cardTop);
+      xo_img_Bind(&heart_ace, 1);
+      BindMesh(heart_ace.components[1].mesh, 4);
+      xo_img_Apply(&heart_ace, 1);
+      ApplyMesh();
+      xo_img_Bind(NULL, 0);
+      xo_render_EndDraw();
+    }
+
+    {
+      xo_render_Translate(&s_Stage00.childSquare, 0.0f, 14.0f - 46.f, 0.0F);
+      xo_render_Rotate(&s_Stage00.childSquare, 0.0f, 0.0F, 0.0F, 1.0F);
+      xo_render_BeginDraw(&s_Stage00.childSquare);
+      xo_img_Bind(&heart_ace, 2);
+      BindMesh(heart_ace.components[2].mesh, 4);
+      xo_img_Apply(&heart_ace, 2);
+      ApplyMesh();
+      xo_img_Bind(NULL, 0);
+      xo_render_EndDraw();
+    }
     xo_render_EndDraw();
   }
 
@@ -127,8 +159,13 @@ void updateGame00(void)
 
 
 
-    if (xo_controller_ButtonPressed(i, XO_BUTTON_TRIGGER_Z))
-      pendflag ^= 1;
+    if (xo_controller_ButtonDown(i, XO_BUTTON_TRIGGER_Z)) {
+      if (xo_controller_ButtonDown(i, XO_BUTTON_A)) {
+        s_Stage00.theta += 3.0f;
+      } else {
+        s_Stage00.theta += 1.0f;
+      }
+    }
 
     //if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
     //{
@@ -142,48 +179,15 @@ void updateGame00(void)
   }
 }
 
-#define tcN 0x0000
-#define tcF (31<<6)
-
-/*
-66
-30
-32, 46,
-*/
-#define tex_c_x 0
-#define tex_c_y 0
-#define tex_c_w 64
-#define tex_c_h 32
-#define tex_c_hw (tex_c_w >> 1)
-#define tex_c_hh (tex_c_h >> 1)
-#define tex_w tex_c_w
-#define tex_h tex_c_h
-
-#define MAKE_INTEGRAL_TYPE(num) (short)((num)+0.5)
-
-
-static Vtx shade_vtx[] = {
-    {.v = {.ob = {-tex_c_hw,  tex_c_hh, -5}, .flag = 0, .tc = {0,              0},            .cn = {xo_render_rgba_white}}},
-    {.v = {.ob = { tex_c_hw,  tex_c_hh, -5}, .flag = 0, .tc = {(tex_c_w)<<6, 0},            .cn = {xo_render_rgba_white}}},
-    {.v = {.ob = { tex_c_hw, -tex_c_hh, -5}, .flag = 0, .tc = {(tex_c_w)<<6, (tex_c_h)<<6}, .cn = {xo_render_rgba_white}}},
-    {.v = {.ob = {-tex_c_hw, -tex_c_hh, -5}, .flag = 0, .tc = {0,              (tex_c_h)<<6}, .cn = {xo_render_rgba_white}}},
-};
-
-void BindMesh()
+void BindMesh(Vtx* mesh, u16 vertCount)
 {
-  gSPVertex(g_Glist++, &(shade_vtx[0]), 4, 0);
+  gSPVertex(g_Glist++, mesh, vertCount, 0);
 
   gDPPipeSync(g_Glist++);
   gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
   gDPSetRenderMode(g_Glist++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
   gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
-  // was: G_SHADE | G_SHADING_SMOOTH
-  gSPSetGeometryMode(g_Glist++,
-  //G_LIGHTING |
-  //G_ZBUFFER |
-   G_SHADE | G_SHADING_SMOOTH
-		       //| G_CULL_BACK
-           );
+  gSPSetGeometryMode(g_Glist++, G_SHADE | G_SHADING_SMOOTH);
 }
 
 void ApplyMesh()

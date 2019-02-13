@@ -12,10 +12,6 @@ char* g_CurrentTexture = &g_TextureBuffer[0];
 // todo: centralize rom2ram functions
 void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
 {
-  // Cannot transfer if size is an odd number, so make it even
-  if (seq_size & 0x00000001)
-    seq_size++;
-
   nuPiReadRom((u32)from_addr, to_addr, seq_size >= lim ? lim : seq_size);
 }
 
@@ -31,7 +27,7 @@ void xo_img_Load(Img_t *img) {
   for(i = 0; i < img->componentCount; ++i) {
     seg = &img->components[i];
     if(seg->data == NULL) {
-      segSize = (seg->w * seg->h * 2) + 8;
+      segSize = (seg->w * seg->h * 2);
       seg->data = g_CurrentTexture;
       g_CurrentTexture += segSize;
       nuPiReadRom((u32)seg->start, seg->data, segSize);
@@ -98,12 +94,12 @@ void xo_img_Apply(Img_t* img, u8 segment)
   ImgSeg_t* seg = &img->components[segment];
   if(seg->data) {
     gDPLoadTextureBlock(g_Glist++,
-      &((char*)seg->data)[8/*magic, if coming from rom*/],
+      seg->data,
       G_IM_FMT_RGBA,
       G_IM_SIZ_16b,
       seg->w, seg->h, 0,
-      seg->txSettingU, // G_TX_CLAMP | G_TX_NOMIRROR
-      seg->txSettingV, // G_TX_CLAMP | G_TX_NOMIRROR
+      seg->txSettingU,
+      seg->txSettingV,
       G_TX_NOMASK, G_TX_NOMASK,
       G_TX_NOLOD, G_TX_NOLOD);
   }

@@ -19,28 +19,46 @@ xo_spec_DeclareRomSegment(heart_ace)
 extern Img_t heart_ace;
 #else // GENERATED_IMAGE_DECLARATIONS
 #include "xo-render.h"
+#include <PR/gbi.h>
+
+Vtx heart_ace_mesh_0[] = {
+    {.v = {.ob = {-32,  16, -5}, .flag = 0, .tc = {0,       0      }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = { 32,  16, -5}, .flag = 0, .tc = {64<<6,   0      }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = { 32, -16, -5}, .flag = 0, .tc = {64<<6,   33<<6},   .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {-32, -16, -5}, .flag = 0, .tc = {0,       33<<6},   .cn = {0xff, 0xff, 0xff, 0xff}}},
+};
+
+Vtx heart_ace_mesh_1[] = {
+    {.v = {.ob = {-32,  14, -5}, .flag = 0, .tc = {0,       0      }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = { 32,  14, -5}, .flag = 0, .tc = {64<<6,   0      }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = { 32, -14, -5}, .flag = 0, .tc = {64<<6,   29<<6},   .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {-32, -14, -5}, .flag = 0, .tc = {0,       29<<6},   .cn = {0xff, 0xff, 0xff, 0xff}}},
+};
 
 ImgSeg_t heart_ace_components[] = {
   {
-    _heart_aceSegmentRomStart + 0/*o*/ ,
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2),
+    _heart_aceSegmentRomStart ,
+    _heart_aceSegmentRomStart + (64*32*2),
     64, 32,
     G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    NULL,
+    heart_ace_mesh_0
   },
   {
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2),
-    _heart_aceSegmentRomStart + 0/*o*/ + (64*32*2) +  (64*32*2),
+    _heart_aceSegmentRomStart + (64*32*2),
+    _heart_aceSegmentRomStart + (64*32*2) +  (64*32*2),
     64, 32,
     G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    NULL,
+    heart_ace_mesh_0
   },
   {
-    _heart_aceSegmentRomStart + 0/*o*/ ,
-    _heart_aceSegmentRomEnd,
+    _heart_aceSegmentRomStart + (64*32*2) +  (64*32*2),
+    _heart_aceSegmentRomStart + (64*32*2) +  (64*32*2) + (64*28*2),
     64, 28,
     G_TX_CLAMP | G_TX_NOMIRROR, G_TX_CLAMP | G_TX_NOMIRROR,
-    NULL
+    NULL,
+    heart_ace_mesh_1
   }
 }; // heart_ace_components
 
@@ -48,7 +66,7 @@ Img_t heart_ace = {
   sizeof(heart_ace_components)/sizeof(heart_ace_components[0]),
   heart_ace_components,
 
-  G_TF_POINT
+  G_TF_BILERP
 }; // heart_ace
 
 #endif // GENERATED_IMAGE_DECLARATIONS

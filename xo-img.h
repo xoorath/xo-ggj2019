@@ -2,6 +2,7 @@
 #define __XO_IMG_H_
 
 #include <PR/ultratypes.h>
+#include <PR/gbi.h>
 
 typedef struct {
   u8* start;
@@ -9,6 +10,7 @@ typedef struct {
   u32 w, h;
   u32 txSettingU, txSettingV; // G_TX_CLAMP | G_TX_NOMIRROR
   void* data;
+  Vtx* mesh;
 } ImgSeg_t;
 
 typedef struct {
