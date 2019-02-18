@@ -20,6 +20,9 @@ typedef struct {
   u32 filter; // G_TF_POINT | G_TF_BILERP
 } Img_t;
 
+// global init, call once before loading any textures.
+void xo_img_init();
+
 void xo_img_Load(Img_t *img);
 void xo_img_Unload(Img_t *img);
 

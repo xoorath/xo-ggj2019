@@ -1,13 +1,13 @@
 #include "xo-img.h"
 
 #include "xo-render.h"
+#include "xo-alloc.h"
 #include "img-donsol-heart-ace.h"
 
 #include <nusys.h>
 
-char g_TextureBuffer[1024*4*32] = {0};
-// todo: use linear allocator with block management
-char* g_CurrentTexture = &g_TextureBuffer[0];
+static BlockAllocator_t g_TextureAllocator;
+static char g_TextureBuffer[1024*4*32] = {0};
 
 // todo: centralize rom2ram functions
 void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
@@ -15,22 +15,26 @@ void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
   nuPiReadRom((u32)from_addr, to_addr, seq_size >= lim ? lim : seq_size);
 }
 
+void xo_img_init() {
+  xo_alloc_init_allocator(&g_TextureAllocator, g_TextureBuffer, sizeof(g_TextureBuffer));
+}
+
 void xo_img_Load(Img_t *img) {
   u16 i;
   s32 segSize;
   ImgSeg_t* seg;
 
-  if(img == NULL) {
+  if(NULL == img) {
     return;
   }
-  // todo: malloc one big block and distribute it.
   for(i = 0; i < img->componentCount; ++i) {
     seg = &img->components[i];
-    if(seg->data == NULL) {
+    if(NULL == seg->data) {
       segSize = (seg->w * seg->h * 2);
-      seg->data = g_CurrentTexture;
-      g_CurrentTexture += segSize;
-      nuPiReadRom((u32)seg->start, seg->data, segSize);
+      seg->data = xo_alloc_malloc8(&g_TextureAllocator, segSize);
+      if(NULL != seg->data) {
+        nuPiReadRom((u32)seg->start, seg->data, segSize);
+      }
     }
   }
 }
@@ -39,15 +43,13 @@ void xo_img_Unload(Img_t *img) {
   u16 i;
   ImgSeg_t* seg;
 
-  if(img == NULL) {
+  if(NULL == img) {
     return;
   }
-  // todo: once we malloc one big block and distribute it,
-  // free the first block but null all blocks.
   for(i = 0; i < img->componentCount; ++i) {
     seg = &img->components[i];
-    if(seg->data != NULL) {
-      //free(seg->data);
+    if(NULL != seg->data) {
+      xo_alloc_free8(&g_TextureAllocator, seg->data);
       seg->data = NULL;
     }
   }
@@ -57,7 +59,7 @@ void xo_img_Bind(Img_t *img, u8 segment)
 {
   ImgSeg_t* seg;
   s32 segSize;
-  if(img != NULL) {
+  if(NULL != img) {
     seg = &img->components[segment];
 
     //segSize = (seg->end - seg->start);
@@ -65,7 +67,7 @@ void xo_img_Bind(Img_t *img, u8 segment)
     //iRom2Ram(seg->start, seg->data, segSize, segSize);
 
 
-    gDPSetColorDither(g_Glist++,G_CD_ENABLE);
+    gDPSetColorDither(g_Glist++,G_CD_DISABLE);
     //gDPSetTexturePersp(g_Glist++,G_TP_PERSP);
     //gDPSetTextureLOD(g_Glist++,G_TL_TILE);
     //gDPSetTextureConvert(g_Glist++,G_TC_FILT);
@@ -92,7 +94,7 @@ void xo_img_Unbind(void)
 void xo_img_Apply(Img_t* img, u8 segment)
 {
   ImgSeg_t* seg = &img->components[segment];
-  if(seg->data) {
+  if(NULL != seg->data) {
     gDPLoadTextureBlock(g_Glist++,
       seg->data,
       G_IM_FMT_RGBA,

@@ -79,7 +79,7 @@ void makeDL00(void)
   // }
 
   {
-    xo_render_Translate(&s_Stage00.grandchildSquare, (int)s_Stage00.x, (int)s_Stage00.y, 0.0F);
+    xo_render_Translate(&s_Stage00.grandchildSquare, s_Stage00.x, s_Stage00.y, 0.0F);
     xo_render_Rotate(&s_Stage00.grandchildSquare, s_Stage00.theta, 0.0F, 0.0F, 1.0F);
     xo_render_BeginDraw(&s_Stage00.grandchildSquare);
 

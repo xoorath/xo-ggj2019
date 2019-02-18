@@ -4,6 +4,7 @@
 #include "segment.h"
 #include "xo-audio.h"
 #include "xo-controller.h"
+#include "xo-img.h"
 #include "xo-render.h"
 #include "donsol-audio.h"
 
@@ -48,6 +49,7 @@ void mainproc(void)
 {
   nuGfxInit();
 
+  xo_img_init();
   xo_render_Init();
   xo_controller_Init();
   xo_audio_Init();
