@@ -29,17 +29,17 @@ Vtx heart_ace_mesh_0[] = {
 };
 
 Vtx heart_ace_mesh_1[] = {
-    {.v = {.ob = {0,  -32, 0}, .flag = 0, .tc = {0,       0    }, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64, -32, 0}, .flag = 0, .tc = {64<<6,   0    }, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64, -64, 0}, .flag = 0, .tc = {64<<6,   32<<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0,  -64, 0}, .flag = 0, .tc = {0,       32<<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {0,  -32, 0}, .flag = 0, .tc = {0,     0    }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {64, -32, 0}, .flag = 0, .tc = {64<<6, 0    }, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {64, -64, 0}, .flag = 0, .tc = {64<<6, 32<<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {0,  -64, 0}, .flag = 0, .tc = {0,     32<<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
 };
 
 Vtx heart_ace_mesh_2[] = {
-    {.v = {.ob = {0,  -64, 0}, .flag = 0, .tc = {0,       0    },  .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64, -64, 0}, .flag = 0, .tc = {64<<6,   0    },  .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64, -92, 0}, .flag = 0, .tc = {64<<6,   28<<6},  .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0,  -92, 0}, .flag = 0, .tc = {0,       28<<6},  .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {0,  -64, 0}, .flag = 0, .tc = {0,     0    },  .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {64, -64, 0}, .flag = 0, .tc = {64<<6, 0    },  .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {64, -92, 0}, .flag = 0, .tc = {64<<6, 28<<6},  .cn = {0xff, 0xff, 0xff, 0xff}}},
+    {.v = {.ob = {0,  -92, 0}, .flag = 0, .tc = {0,     28<<6},  .cn = {0xff, 0xff, 0xff, 0xff}}},
 };
 
 ImgSeg_t heart_ace_components[] = {

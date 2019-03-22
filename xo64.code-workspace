@@ -41,7 +41,8 @@
       "os_flash.h": "c",
       "gu.h": "c",
       "sp.h": "c",
-      "xo-buffer.h": "c"
+      "xo-buffer.h": "c",
+      "donsol-stage-play.h": "c"
     }
   }
 }

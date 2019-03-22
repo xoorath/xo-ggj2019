@@ -7,21 +7,19 @@
 #include "xo-img.h"
 #include "xo-render.h"
 #include "donsol-audio.h"
+#include "donsol-stage-play.h"
 
 volatile int stage;
 
 /* Declaration of the prototype */
 void stage00(int);
-void stage01(int);
+void donsol_stage_play_gfx_tick(int);
 
 /* Declaration of the external function */
 void initStage00(void);
 void makeDL00(void);
 void updateGame00(void);
 
-void initStage01(void);
-void makeDL01(void);
-void updateGame01(void);
 
 // Values 0 or 1 used by pending check of the call-back function
 volatile int pendflag = 0;
@@ -68,8 +66,8 @@ void mainproc(void)
       break;
     case 1:
       stage = -1;
-      initStage01();
-      nuGfxFuncSet((NUGfxFunc)stage01);
+      donsol_stage_play_init();
+      nuGfxFuncSet((NUGfxFunc)donsol_stage_play_gfx_tick);
       nuGfxDisplayOn();
       break;
     default:
@@ -156,24 +154,23 @@ void stage00(int pendingGfx)
   updateGame00();
 }
 
-/* The stage 1 */
-void stage01(int pendingGfx)
+void donsol_stage_play_gfx_tick(int pendingGfx)
 {
-  /* If necessary, change the number of frame buffers */
+  // If necessary, change the number of frame buffers
   if (pendflag != oldpendflag)
   {
-    if (pendingGfx == 0) /* No pending display list */
+    if (pendingGfx == 0) // No pending display list
       changeFrameBuffer();
-    return; /* Do not launch a new task when this routine is in use */
+    return; // Do not launch a new task when this routine is in use
   }
 
-  /* Displaying process, depending on the number of processing/pending RCP tasks */
-  if (pendingGfx < 5) /* The number of DLs used in stage00 is 4 kinds x 2 buffers */
+  // Displaying process, depending on the number of processing/pending RCP tasks
+  if (pendingGfx < 5) // The number of DLs used in stage00 is 4 kinds x 2 buffers
   {
     dspcount = calcFrame();
-    makeDL01();
+    donsol_stage_play_render();
   }
 
-  /* The game progressing process */
-  updateGame01();
+  // The game progressing process
+  donsol_stage_play_update();
 }
