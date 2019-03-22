@@ -40,7 +40,8 @@
       "ramrom.h": "c",
       "os_flash.h": "c",
       "gu.h": "c",
-      "sp.h": "c"
+      "sp.h": "c",
+      "xo-buffer.h": "c"
     }
   }
 }

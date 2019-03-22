@@ -17,6 +17,10 @@ typedef struct {
   u16 componentCount;
   ImgSeg_t* components;
 
+  // f32 chosen here because it will typically be used with layout code.
+  // components on the other hand use w/h for buffer sizes, so they're unsigned ints.
+  f32 w, h;
+
   u32 filter; // G_TF_POINT | G_TF_BILERP
 } Img_t;
 

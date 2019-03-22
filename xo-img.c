@@ -1,13 +1,14 @@
 #include "xo-img.h"
 
-#include "xo-render.h"
 #include "xo-alloc.h"
+#include "xo-buffer.h"
+#include "xo-render.h"
 #include "img-donsol-heart-ace.h"
 
 #include <nusys.h>
 
 static BlockAllocator_t g_TextureAllocator;
-static char g_TextureBuffer[1024*4*32] = {0};
+static char g_TextureBuffer[XO_BUFFER_TEX_MEM] = {0};
 
 // todo: centralize rom2ram functions
 void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)

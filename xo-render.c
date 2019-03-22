@@ -186,3 +186,19 @@ void xo_render_SetClearColor(u8 r, u8 g, u8 b)
 {
   s_ClearColor = (GPACK_RGBA5551(r, g, b, 1) << 16 | GPACK_RGBA5551(r, g, b, 1));
 }
+
+void xo_render_bind_mesh(Vtx* mesh, u16 vertCount)
+{
+  gSPVertex(g_Glist++, mesh, vertCount, 0);
+
+  gDPPipeSync(g_Glist++);
+  gDPSetCycleType(g_Glist++, G_CYC_1CYCLE);
+  gDPSetRenderMode(g_Glist++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+  gSPClearGeometryMode(g_Glist++, 0xFFFFFFFF);
+  gSPSetGeometryMode(g_Glist++, G_SHADE | G_SHADING_SMOOTH);
+}
+
+void xo_render_apply_mesh()
+{
+  gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
+}

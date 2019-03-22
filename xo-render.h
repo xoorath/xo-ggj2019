@@ -87,5 +87,11 @@ void xo_render_DebugLog(char const* msg);
 // Sets the clear color to an RGB value. You only have to do this as a state change, not every frame.
 void xo_render_SetClearColor(u8 r, u8 g, u8 b);
 
+// TODO: generalize, and move to an organized location.
+void xo_render_bind_mesh(Vtx* mesh, u16 vertCount);
+
+// TODO: generalize, and move to an organized location.
+void xo_render_apply_mesh(void);
+
 
 #endif // __XO_RENDER_H_

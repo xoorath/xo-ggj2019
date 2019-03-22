@@ -83,8 +83,12 @@ void xo_alloc_free(BlockAllocator_t* allocator, void* mem) {
 }
 
 void* xo_alloc_malloc8        (BlockAllocator_t* allocator, u32 size) {
-  char* m = xo_alloc_malloc(allocator, size+8);
-  return m + 8-((s8)m%8);
+  union {
+    char* m;
+    u32 s;
+  } x;
+  x.m = xo_alloc_malloc(allocator, size+8);
+  return x.m + 8-(s32)(x.s%8);
 }
 
 void  xo_alloc_free8          (BlockAllocator_t* allocator, void* mem){
