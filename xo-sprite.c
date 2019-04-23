@@ -81,3 +81,48 @@ void xo_sprite_draw_bottom_right(Sprite_t* sprite) {
 
   xo_render_EndDraw();
 }
+
+void xo_sprite_draw_center_snap       (Sprite_t* sprite) {
+  f32 x = sprite->x, y = sprite->y;
+  sprite->x = (f32)(s32)sprite->x;
+  sprite->y = (f32)(s32)sprite->y;
+  xo_sprite_draw_center(sprite);
+  sprite->x = x;
+  sprite->y = y;
+}
+
+void xo_sprite_draw_bottom_left_snap  (Sprite_t* sprite) {
+  f32 x = sprite->x, y = sprite->y;
+  sprite->x = (f32)(s32)sprite->x;
+  sprite->y = (f32)(s32)sprite->y;
+  xo_sprite_draw_bottom_left(sprite);
+  sprite->x = x;
+  sprite->y = y;
+}
+
+void xo_sprite_draw_top_left_snap     (Sprite_t* sprite) {
+  f32 x = sprite->x, y = sprite->y;
+  sprite->x = (f32)(s32)sprite->x;
+  sprite->y = (f32)(s32)sprite->y;
+  xo_sprite_draw_top_left(sprite);
+  sprite->x = x;
+  sprite->y = y;
+}
+
+void xo_sprite_draw_top_right_snap    (Sprite_t* sprite) {
+  f32 x = sprite->x, y = sprite->y;
+  sprite->x = (f32)(s32)sprite->x;
+  sprite->y = (f32)(s32)sprite->y;
+  xo_sprite_draw_top_right(sprite);
+  sprite->x = x;
+  sprite->y = y;
+}
+
+void xo_sprite_draw_bottom_right_snap (Sprite_t* sprite) {
+  f32 x = sprite->x, y = sprite->y;
+  sprite->x = (f32)(s32)sprite->x;
+  sprite->y = (f32)(s32)sprite->y;
+  xo_sprite_draw_bottom_right(sprite);
+  sprite->x = x;
+  sprite->y = y;
+}

@@ -33,8 +33,7 @@ void makeDL00(void)
 
   xo_render_BeginDisplayList_Render();
 
-
-  xo_sprite_draw_center(&s_Stage00.joker);
+  xo_sprite_draw_center_snap(&s_Stage00.joker);
 
   xo_render_EndDisplayList_Render();
   xo_render_DebugLog("stage 00");
@@ -61,8 +60,6 @@ void updateGame00(void)
     xo_controller_GetAxisUnclamped(i, XO_AXIS_STICK, &inputx, &inputy);
     s_Stage00.joker.x += inputx;
     s_Stage00.joker.y += inputy;
-
-
 
     if (xo_controller_ButtonDown(i, XO_BUTTON_TRIGGER_Z)) {
       if (xo_controller_ButtonDown(i, XO_BUTTON_A)) {

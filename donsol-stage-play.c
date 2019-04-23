@@ -28,7 +28,7 @@ void donsol_stage_play_render(void)
 
   xo_render_BeginDisplayList_Render();
 
-  xo_sprite_draw_center(&s_StagePlay.joker);
+  xo_sprite_draw_center_snap(&s_StagePlay.joker);
 
   xo_render_EndDisplayList_Render();
   xo_render_DebugLog("stage 01");
