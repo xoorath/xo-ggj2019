@@ -4,7 +4,7 @@
 #include "xo-render.h"
 #include "xo-controller.h"
 #include "xo-sprite.h"
-#include "img-donsol-heart-ace.h"
+#include "test_joker.h"
 
 static struct
 {
@@ -18,8 +18,8 @@ void donsol_stage_play_init(void)
   donsol_audio_Init();
   donsol_audio_PlayMainSong();
 
-  xo_img_Load(&heart_ace);
-  xo_sprite_init(&s_StagePlay.joker, &heart_ace);
+  xo_img_Load(&test_joker);
+  xo_sprite_init(&s_StagePlay.joker, &test_joker);
 }
 
 void donsol_stage_play_render(void)

@@ -76,16 +76,16 @@ beginseg
 endseg
 
 beginseg
-	name	"heart_ace"
+	name	"test_joker"
 	after code
 	flags	OBJECT
-	include "img-donsol-heart-ace.o"
+	include "test_joker.o"
 endseg
 
 beginwave
   name	"nu5"
   include	"code"
-  include "heart_ace"
+  include "test_joker"
   include "donsolptr"
   include "donsolwbank"
   include "donsolbin"

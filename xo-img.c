@@ -3,7 +3,7 @@
 #include "xo-alloc.h"
 #include "xo-buffer.h"
 #include "xo-render.h"
-#include "img-donsol-heart-ace.h"
+#include "test_joker.h"
 
 #include <nusys.h>
 

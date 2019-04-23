@@ -29,13 +29,13 @@ APP =		build/project.out
 
 TARGETS =	build/project.n64
 
-HFILES = donsol-audio.h donsol-card.h gamesnd.h main.h segment.h xo-alloc.h xo-audio.h xo-controller.h xo-img.h xo-math.h xo-render.h xo-spec.h img-donsol-heart-ace.h xo-sprite.h
+HFILES = donsol-audio.h donsol-card.h gamesnd.h main.h segment.h xo-alloc.h xo-audio.h xo-controller.h xo-img.h xo-math.h xo-render.h xo-spec.h test_joker.h xo-sprite.h
 
 CODEFILES = donsol-audio.c donsol-card.c donsol-stage-play.c main.c stage00.c xo-alloc.c xo-audio.c xo-controller.c xo-img.c xo-render.c xo-sprite.c
 
 CODEOBJECTS =	$(CODEFILES:.c=.o)  $(NUSYSLIBDIR)/nusys.o
 
-DATAFILES   = img-donsol-heart-ace.c
+DATAFILES   = test_joker.c
 
 DATAOBJECTS =	$(DATAFILES:.c=.o)
 
