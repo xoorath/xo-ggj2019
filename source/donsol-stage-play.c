@@ -4,7 +4,7 @@
 #include "xo-render.h"
 #include "xo-controller.h"
 #include "xo-sprite.h"
-#include "test_joker.h"
+#include <test_joker.h>
 
 static struct
 {

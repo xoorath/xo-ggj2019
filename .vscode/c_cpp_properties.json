@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/source/**",
+                "${workspaceFolder}/sprites/**",
                 "C:\\nintendo\\n64kit\\mfs\\include",
                 "C:\\nintendo\\n64kit\\niff\\include",
                 "C:\\nintendo\\n64kit\\nusys\\include",

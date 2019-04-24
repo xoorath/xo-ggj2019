@@ -79,7 +79,7 @@ beginseg
 	name	"test_joker"
 	after code
 	flags	OBJECT
-	include "test_joker.o"
+	include "sprites/test_joker.o"
 endseg
 
 beginwave

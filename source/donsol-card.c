@@ -1,7 +1,7 @@
 #include "donsol-card.h"
 
 #define GENERATED_IMAGE_DECLARATIONS
-#include "test_joker.h"
+#include <test_joker.h>
 #undef GENERATED_IMAGE_DECLARATIONS
 
 card_t g_StartingDeck[] = {
