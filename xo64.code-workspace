@@ -43,7 +43,10 @@
       "sp.h": "c",
       "xo-buffer.h": "c",
       "donsol-stage-play.h": "c",
-      "xo-alloc.h": "c"
+      "xo-alloc.h": "c",
+      "cardclubs5.h": "c",
+      "carddiamondsq.h": "c",
+      "cardclubs10.h": "c"
     }
   }
 }

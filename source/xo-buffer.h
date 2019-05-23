@@ -5,7 +5,7 @@
 #define xo_buffer_kb(x) x*1024
 
 // How much memory is reserved for textures?
-#define XO_BUFFER_TEX_MEM                         xo_buffer_kb(4*32)
+#define XO_BUFFER_TEX_MEM                         xo_buffer_kb(4*3*54)
 
 
 #endif

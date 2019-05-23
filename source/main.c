@@ -1,7 +1,6 @@
 #include <nusys.h>
 #include <nualsgi_n.h>
 #include "main.h"
-#include "segment.h"
 #include "xo-audio.h"
 #include "xo-controller.h"
 #include "xo-img.h"

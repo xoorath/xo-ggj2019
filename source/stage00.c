@@ -6,6 +6,7 @@
 #include "xo-render.h"
 #include "xo-sprite.h"
 #include "test_joker.h"
+#include <cardclubs7.h>
 
 static struct
 {

@@ -3,7 +3,6 @@
 #include "xo-64/xo-alloc.h"
 #include "xo-buffer.h"
 #include "xo-render.h"
-#include <test_joker.h>
 
 #include <nusys.h>
 

@@ -36,13 +36,17 @@ CODESEGMENT =	codesegment.o
 
 OBJECTS =	$(CODESEGMENT) $(DATAOBJECTS)
 
-default: clean $(TARGETS) $(call @makemask $(TARGETS))
+default: clean $(TARGETS)
+
+code: $(TARGETS)
 
 clean:
 		rm -f **/*.o
+		rm -f build/*.out
 
 $(CODESEGMENT):	$(CODEOBJECTS) Makefile
 		$(LD) -o $(CODESEGMENT) -r $(CODEOBJECTS) $(LDFLAGS)
 
 $(TARGETS):	$(OBJECTS)
 		$(MAKEROM) spec -I$(NUSYSINCDIR) -r $(TARGETS) -e $(APP)
+		@makemask $(TARGETS)
