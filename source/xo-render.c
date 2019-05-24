@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define GLIST_RENDER_LENGTH 2048
+#define GLIST_RENDER_LENGTH 4096
 #define GLIST_CLEAR_LENGTH 512
 
 static Vp vp = {

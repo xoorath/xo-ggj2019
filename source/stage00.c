@@ -5,7 +5,7 @@
 #include "xo-img.h"
 #include "xo-render.h"
 #include "xo-sprite.h"
-#include "test_joker.h"
+#include "cardjoker.h"
 #include <cardclubs7.h>
 
 static struct
@@ -23,8 +23,8 @@ void initStage00(void)
   donsol_audio_Init();
   donsol_audio_PlayMainSong();
 
-  xo_img_Load(&test_joker);
-  xo_sprite_init(&s_Stage00.joker, &test_joker);
+  xo_img_Load(&cardjoker);
+  xo_sprite_init(&s_Stage00.joker, &cardjoker);
 }
 
 void makeDL00(void)
