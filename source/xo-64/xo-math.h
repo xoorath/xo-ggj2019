@@ -1,7 +1,7 @@
 #ifndef __XO_MATH_H_
 #define __XO_MATH_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <MATH.H>
 
 //////////////////////////////////////////////////////////////////////////////////////////

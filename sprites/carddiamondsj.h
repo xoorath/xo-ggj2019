@@ -8,7 +8,7 @@
 #ifndef _carddiamondsj_H_
 #define _carddiamondsj_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <xo-img.h>
 
 #include <xo-spec.h>

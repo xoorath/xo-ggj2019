@@ -3,7 +3,7 @@
 #ifndef __XO_ALLOC_H_
 #define __XO_ALLOC_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////// Block (internal)
 

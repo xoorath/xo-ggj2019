@@ -1,5 +1,6 @@
-#include <PR/ultratypes.h>
 #include <xo-alloc.h>
+
+#include <xo-types.h>
 #include <xo-render.h>
 
 void xo_alloc_dbg_draw(BlockAllocator_t* allocator) {

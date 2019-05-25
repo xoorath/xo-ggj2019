@@ -1,7 +1,7 @@
 #ifndef __XO_IMG_H_
 #define __XO_IMG_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <PR/gbi.h>
 
 typedef struct {

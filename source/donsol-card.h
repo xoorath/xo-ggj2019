@@ -1,9 +1,9 @@
 #ifndef __DONSOL_CARD_H_
 #define __DONSOL_CARD_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 
-typedef u8 card_t;
+typedef u8 Card_t;
 
 enum {
   // bits 1, 2, 3, 4
@@ -36,57 +36,18 @@ enum {
   CARDSTATE_MASK = CARDSTATE_FLIPPED
 };
 
-#define DECK_SIZE 54
-extern card_t g_StartingDeck[];
-extern card_t g_ActiveDeck[];
+u8 donsol_card_IsJoker(Card_t card);
+u8 donsol_card_IsFace(Card_t card);
+u8 donsol_card_IsNumeric(Card_t card);
+u8 donsol_card_GetNumericValue(Card_t card);
+u8 donsol_card_GetSuit(Card_t card);
+u8 donsol_card_IsHearts(Card_t card);
+u8 donsol_card_IsDiamonds(Card_t card);
+u8 donsol_card_IsSpades(Card_t card);
+u8 donsol_card_IsClubs(Card_t card);
+u8 donsol_card_IsFlipped(Card_t card);
 
-inline u8 donsol_card_IsJoker(card_t card)
-{
-  return (card & CARD_MASK) >= CARD_JO1;
-}
-
-inline u8 donsol_card_IsFace(card_t card)
-{
-  card = card & CARD_MASK;
-  return card >= CARD_J && CARD_J <= CARD_K;
-}
-
-inline u8 donsol_card_IsNumeric(card_t card)
-{
-  return (card & CARD_MASK) <= CARD_10;
-}
-
-inline u8 donsol_card_GetSuit(card_t card)
-{
-  return (card & SUIT_MASK);
-}
-
-inline u8 donsol_card_IsHearts(card_t card)
-{
-  return donsol_card_GetSuit(card) == SUIT_HEARTS;
-}
-
-inline u8 donsol_card_IsDiamonds(card_t card)
-{
-  return donsol_card_GetSuit(card) == SUIT_DIAMONDS;
-}
-
-inline u8 donsol_card_IsSpades(card_t card)
-{
-  return donsol_card_GetSuit(card) == SUIT_SPADES;
-}
-
-inline u8 donsol_card_IsClubs(card_t card)
-{
-  return donsol_card_GetSuit(card) == SUIT_CLUBS;
-}
-
-inline u8 donsol_card_IsFlipped(card_t card)
-{
-  return !!(card & CARDSTATE_FLIPPED);
-}
-
-void donsol_card_ClearFlippedBit();
-void donsol_card_ShuffleDeck();
+void donsol_card_ClearFlippedBit(Card_t* collection, u8 count);
+void donsol_card_ShuffleDeck(Card_t* collection, u8 count);
 
 #endif // __DONSOL_CARD_H_

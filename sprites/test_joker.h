@@ -8,7 +8,7 @@
 #ifndef _test_joker_H_
 #define _test_joker_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <xo-img.h>
 
 #include <xo-spec.h>

@@ -8,7 +8,7 @@
 #ifndef _cardhearts9_H_
 #define _cardhearts9_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <xo-img.h>
 
 #include <xo-spec.h>

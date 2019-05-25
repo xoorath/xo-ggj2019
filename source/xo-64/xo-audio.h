@@ -1,7 +1,7 @@
 #ifndef __XO_AUDIO_H_
 #define __XO_AUDIO_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 
 typedef struct {
   u8* songStart;

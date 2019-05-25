@@ -1,7 +1,7 @@
 #ifndef __XO_SPEC_H_
 #define __XO_SPEC_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 
 #define xo_spec_DeclareCodeSegment() \
   extern char _codeSegmentStart[]; \

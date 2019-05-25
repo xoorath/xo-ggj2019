@@ -8,7 +8,7 @@
 #ifndef _cardspadesj_H_
 #define _cardspadesj_H_
 
-#include <PR/ultratypes.h>
+#include <xo-types.h>
 #include <xo-img.h>
 
 #include <xo-spec.h>

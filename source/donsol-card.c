@@ -5,145 +5,78 @@
 #include <cardjoker.h>
 #undef GENERATED_IMAGE_DECLARATIONS
 
-card_t g_StartingDeck[] = {
-    CARD_JO1,
-    CARD_JO2,
+#ifdef _GU_H_
+#   define donsolRandom guRandom
+#else
+#   include <stdlib.h>
+#   define donsolRandom rand
+#endif
 
-    CARD_A | SUIT_HEARTS,
-    CARD_2 | SUIT_HEARTS,
-    CARD_3 | SUIT_HEARTS,
-    CARD_4 | SUIT_HEARTS,
-    CARD_5 | SUIT_HEARTS,
-    CARD_6 | SUIT_HEARTS,
-    CARD_7 | SUIT_HEARTS,
-    CARD_8 | SUIT_HEARTS,
-    CARD_9 | SUIT_HEARTS,
-    CARD_10 | SUIT_HEARTS,
-    CARD_J | SUIT_HEARTS,
-    CARD_Q | SUIT_HEARTS,
-    CARD_K | SUIT_HEARTS,
+u8 donsol_card_IsJoker(Card_t card) {
+  return (card & CARD_MASK) >= CARD_JO1;
+}
 
-    CARD_A | SUIT_DIAMONDS,
-    CARD_2 | SUIT_DIAMONDS,
-    CARD_3 | SUIT_DIAMONDS,
-    CARD_4 | SUIT_DIAMONDS,
-    CARD_5 | SUIT_DIAMONDS,
-    CARD_6 | SUIT_DIAMONDS,
-    CARD_7 | SUIT_DIAMONDS,
-    CARD_8 | SUIT_DIAMONDS,
-    CARD_9 | SUIT_DIAMONDS,
-    CARD_10 | SUIT_DIAMONDS,
-    CARD_J | SUIT_DIAMONDS,
-    CARD_Q | SUIT_DIAMONDS,
-    CARD_K | SUIT_DIAMONDS,
-
-    CARD_A | SUIT_SPADES,
-    CARD_2 | SUIT_SPADES,
-    CARD_3 | SUIT_SPADES,
-    CARD_4 | SUIT_SPADES,
-    CARD_5 | SUIT_SPADES,
-    CARD_6 | SUIT_SPADES,
-    CARD_7 | SUIT_SPADES,
-    CARD_8 | SUIT_SPADES,
-    CARD_9 | SUIT_SPADES,
-    CARD_10 | SUIT_SPADES,
-    CARD_J | SUIT_SPADES,
-    CARD_Q | SUIT_SPADES,
-    CARD_K | SUIT_SPADES,
-
-    CARD_A | SUIT_CLUBS,
-    CARD_2 | SUIT_CLUBS,
-    CARD_3 | SUIT_CLUBS,
-    CARD_4 | SUIT_CLUBS,
-    CARD_5 | SUIT_CLUBS,
-    CARD_6 | SUIT_CLUBS,
-    CARD_7 | SUIT_CLUBS,
-    CARD_8 | SUIT_CLUBS,
-    CARD_9 | SUIT_CLUBS,
-    CARD_10 | SUIT_CLUBS,
-    CARD_J | SUIT_CLUBS,
-    CARD_Q | SUIT_CLUBS,
-    CARD_K | SUIT_CLUBS};
-
-card_t g_ActiveDeck[] = {
-    CARD_JO1,
-    CARD_JO2,
-
-    CARD_A | SUIT_HEARTS,
-    CARD_2 | SUIT_HEARTS,
-    CARD_3 | SUIT_HEARTS,
-    CARD_4 | SUIT_HEARTS,
-    CARD_5 | SUIT_HEARTS,
-    CARD_6 | SUIT_HEARTS,
-    CARD_7 | SUIT_HEARTS,
-    CARD_8 | SUIT_HEARTS,
-    CARD_9 | SUIT_HEARTS,
-    CARD_10 | SUIT_HEARTS,
-    CARD_J | SUIT_HEARTS,
-    CARD_Q | SUIT_HEARTS,
-    CARD_K | SUIT_HEARTS,
-
-    CARD_A | SUIT_DIAMONDS,
-    CARD_2 | SUIT_DIAMONDS,
-    CARD_3 | SUIT_DIAMONDS,
-    CARD_4 | SUIT_DIAMONDS,
-    CARD_5 | SUIT_DIAMONDS,
-    CARD_6 | SUIT_DIAMONDS,
-    CARD_7 | SUIT_DIAMONDS,
-    CARD_8 | SUIT_DIAMONDS,
-    CARD_9 | SUIT_DIAMONDS,
-    CARD_10 | SUIT_DIAMONDS,
-    CARD_J | SUIT_DIAMONDS,
-    CARD_Q | SUIT_DIAMONDS,
-    CARD_K | SUIT_DIAMONDS,
-
-    CARD_A | SUIT_SPADES,
-    CARD_2 | SUIT_SPADES,
-    CARD_3 | SUIT_SPADES,
-    CARD_4 | SUIT_SPADES,
-    CARD_5 | SUIT_SPADES,
-    CARD_6 | SUIT_SPADES,
-    CARD_7 | SUIT_SPADES,
-    CARD_8 | SUIT_SPADES,
-    CARD_9 | SUIT_SPADES,
-    CARD_10 | SUIT_SPADES,
-    CARD_J | SUIT_SPADES,
-    CARD_Q | SUIT_SPADES,
-    CARD_K | SUIT_SPADES,
-
-    CARD_A | SUIT_CLUBS,
-    CARD_2 | SUIT_CLUBS,
-    CARD_3 | SUIT_CLUBS,
-    CARD_4 | SUIT_CLUBS,
-    CARD_5 | SUIT_CLUBS,
-    CARD_6 | SUIT_CLUBS,
-    CARD_7 | SUIT_CLUBS,
-    CARD_8 | SUIT_CLUBS,
-    CARD_9 | SUIT_CLUBS,
-    CARD_10 | SUIT_CLUBS,
-    CARD_J | SUIT_CLUBS,
-    CARD_Q | SUIT_CLUBS,
-    CARD_K | SUIT_CLUBS};
-
-void donsol_card_ClearFlippedBit()
+u8 donsol_card_IsFace(Card_t card)
 {
+  card = card & CARD_MASK;
+  return card >= CARD_J && CARD_J <= CARD_K;
+}
+
+u8 donsol_card_IsNumeric(Card_t card)
+{
+  card &= CARD_MASK;
+  return card > CARD_A && card <= CARD_10;
+}
+
+u8 donsol_card_GetNumericValue(Card_t card)
+{
+  return card & CARD_MASK;
+}
+
+u8 donsol_card_GetSuit(Card_t card)
+{
+  return (card & SUIT_MASK);
+}
+
+u8 donsol_card_IsHearts(Card_t card)
+{
+  return donsol_card_GetSuit(card) == SUIT_HEARTS;
+}
+
+u8 donsol_card_IsDiamonds(Card_t card)
+{
+  return donsol_card_GetSuit(card) == SUIT_DIAMONDS;
+}
+
+u8 donsol_card_IsSpades(Card_t card)
+{
+  return donsol_card_GetSuit(card) == SUIT_SPADES;
+}
+
+u8 donsol_card_IsClubs(Card_t card)
+{
+  return donsol_card_GetSuit(card) == SUIT_CLUBS;
+}
+
+u8 donsol_card_IsFlipped(Card_t card)
+{
+  return !!(card & CARDSTATE_FLIPPED);
+}
+
+void donsol_card_ClearFlippedBit(Card_t* collection, u8 count) {
   u8 i;
-  for(i = 0; i < DECK_SIZE; ++i)
-  {
-    g_ActiveDeck[i] &= ~CARDSTATE_FLIPPED;
+  for(i = 0; i < count; ++i) {
+    collection[i] &= ~CARDSTATE_FLIPPED;
   }
 }
 
-void donsol_card_ShuffleDeck()
-{
+void donsol_card_ShuffleDeck(Card_t* collection, u8 count) {
   u8 i, r;
-  card_t t;
-  for(i = 0; i < DECK_SIZE; ++i)
-  {
-    r = rand() % DECK_SIZE;
-    t = g_ActiveDeck[i];
-    g_ActiveDeck[i] = g_ActiveDeck[r];
-    g_ActiveDeck[r] = t;
+  Card_t t;
+  for(i = 0; i < count; ++i) {
+    r = donsolRandom() % count;
+    t = collection[i];
+    collection[i] = collection[r];
+    collection[r] = t;
   }
-
 }

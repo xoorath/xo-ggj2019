@@ -18,7 +18,8 @@
                 "DNU_DEBUG",
                 "DF3DEX_GBI_2",
                 "_LANGUAGE_C",
-                "_MIPS_SZLONG=32"
+                "_MIPS_SZLONG=32",
+                "_GU_H_"
             ]
         }
     ],
