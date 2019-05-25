@@ -11,14 +11,14 @@
 #include <PR/ultratypes.h>
 #include <xo-img.h>
 
-#include "xo-spec.h"
+#include <xo-spec.h>
 
 xo_spec_DeclareRomSegment(test_joker)
 
 #ifndef GENERATED_IMAGE_DECLARATIONS
 extern Img_t test_joker;
 #else // GENERATED_IMAGE_DECLARATIONS
-#include "xo-render.h"
+#include <xo-render.h>
 #include <PR/gbi.h>
 
 Vtx test_joker_mesh_0[] = {

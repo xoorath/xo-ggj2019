@@ -11,14 +11,14 @@
 #include <PR/ultratypes.h>
 #include <xo-img.h>
 
-#include "xo-spec.h"
+#include <xo-spec.h>
 
 xo_spec_DeclareRomSegment(cardjoker)
 
 #ifndef GENERATED_IMAGE_DECLARATIONS
 extern Img_t cardjoker;
 #else // GENERATED_IMAGE_DECLARATIONS
-#include "xo-render.h"
+#include <xo-render.h>
 #include <PR/gbi.h>
 
 Vtx cardjoker_mesh_0[] = {

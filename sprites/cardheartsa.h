@@ -11,14 +11,14 @@
 #include <PR/ultratypes.h>
 #include <xo-img.h>
 
-#include "xo-spec.h"
+#include <xo-spec.h>
 
 xo_spec_DeclareRomSegment(cardheartsa)
 
 #ifndef GENERATED_IMAGE_DECLARATIONS
 extern Img_t cardheartsa;
 #else // GENERATED_IMAGE_DECLARATIONS
-#include "xo-render.h"
+#include <xo-render.h>
 #include <PR/gbi.h>
 
 Vtx cardheartsa_mesh_0[] = {

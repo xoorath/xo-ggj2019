@@ -46,7 +46,10 @@
       "xo-alloc.h": "c",
       "cardclubs5.h": "c",
       "carddiamondsq.h": "c",
-      "cardclubs10.h": "c"
+      "cardclubs10.h": "c",
+      "xo-audio.h": "c",
+      "xo-controller.h": "c",
+      "main.h": "c"
     }
   }
 }

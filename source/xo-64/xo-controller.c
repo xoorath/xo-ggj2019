@@ -1,5 +1,5 @@
-#include "xo-controller.h"
-#include "xo-math.h"
+#include <xo-controller.h>
+#include <xo-math.h>
 #include <STRING.H>
 
 // TODO: Consider using the nusys controller code for current/last state checking.

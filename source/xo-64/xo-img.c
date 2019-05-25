@@ -1,8 +1,8 @@
-#include "xo-img.h"
+#include <xo-img.h>
 
-#include "xo-64/xo-alloc.h"
-#include "xo-buffer.h"
-#include "xo-render.h"
+#include <xo-alloc.h>
+#include <xo-buffer.h>
+#include <xo-render.h>
 
 #include <nusys.h>
 

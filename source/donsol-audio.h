@@ -1,8 +1,8 @@
 #ifndef __DONSOL_AUDIO_H_
 #define __DONSOL_AUDIO_H_
 
-#include "xo-audio.h"
-#include "xo-spec.h"
+#include <xo-audio.h>
+#include <xo-spec.h>
 
 xo_spec_DeclareCodeSegment();
 

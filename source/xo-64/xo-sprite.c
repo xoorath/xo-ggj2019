@@ -1,4 +1,4 @@
-#include "xo-sprite.h"
+#include <xo-sprite.h>
 
 void xo_sprite_init(Sprite_t* sprite, Img_t* img) {
   sprite->img = img;

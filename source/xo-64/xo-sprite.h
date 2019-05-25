@@ -1,8 +1,8 @@
 #ifndef __XO_SPRITE_H_
 #define __XO_SPRITE_H_
 
-#include "xo-img.h"
-#include "xo-render.h"
+#include <xo-img.h>
+#include <xo-render.h>
 
 typedef struct {
   Transformation_t parent, xform;

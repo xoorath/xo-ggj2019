@@ -5,14 +5,14 @@
             "includePath": [
                 "${workspaceFolder}/source/**",
                 "${workspaceFolder}/sprites/**",
-                "C:\\nintendo\\n64kit\\mfs\\include",
-                "C:\\nintendo\\n64kit\\niff\\include",
-                "C:\\nintendo\\n64kit\\nusys\\include",
-                "C:\\nintendo\\n64kit\\nustd\\include",
-                "C:\\ultra\\usr\\include",
-                "C:\\ultra\\GCC\\MIPSE\\INCLUDE",
-                "C:\\N64Tools\\lib",
-                "C:\\N64Tools\\lib\\vscode_binding"
+                "D:\\nintendo\\n64kit\\mfs\\include",
+                "D:\\nintendo\\n64kit\\niff\\include",
+                "D:\\nintendo\\n64kit\\nusys\\include",
+                "D:\\nintendo\\n64kit\\nustd\\include",
+                "D:\\ultra\\usr\\include",
+                "D:\\ultra\\GCC\\MIPSE\\INCLUDE",
+                "D:\\N64Tools\\lib",
+                "D:\\N64Tools\\lib\\vscode_binding"
             ],
             "defines": [
                 "DNU_DEBUG",

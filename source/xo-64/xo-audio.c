@@ -1,10 +1,10 @@
-#include "xo-audio.h"
+#include <xo-audio.h>
 #include <ASSERT.H>
 
 #include <nusys.h>
 #include <nualstl_n.h>
 
-#include "xo-spec.h"
+#include <xo-spec.h>
 
 int ptr_buf[NU_AU_SAMPLE_SIZE];
 int tune_buf[NU_AU_SONG_SIZE];

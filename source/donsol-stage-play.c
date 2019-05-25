@@ -1,10 +1,10 @@
 #include <assert.h>
 #include <nusys.h>
 #include "main.h"
-#include "xo-controller.h"
-#include "xo-img.h"
-#include "xo-render.h"
-#include "xo-sprite.h"
+#include <xo-controller.h>
+#include <xo-img.h>
+#include <xo-render.h>
+#include <xo-sprite.h>
 #include "cardjoker.h"
 #include "./donsol-card-images.h"
 
@@ -116,7 +116,7 @@ void donsol_stage_play_render(void)
   xo_render_EndFrame();
 }
 
-static frames_until_transfer = 10;
+static frames_until_transfer = 100;
 void donsol_stage_play_update(void)
 {
   u8 i;
@@ -144,8 +144,8 @@ void donsol_stage_play_update(void)
       }
     }
 
-    //if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
-    if(--frames_until_transfer <= 0)
+    if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    //if(--frames_until_transfer <= 0)
     {
       frames_until_transfer = 10;
       nuGfxFuncRemove();

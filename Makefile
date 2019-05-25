@@ -14,7 +14,7 @@ MAKEROM = @mild
 NUAUDIOLIB = -lnualstl_n_d -ln_gmus_d -ln_gaudio_sc
 
 LCDEFS =	-DNU_DEBUG -DF3DEX_GBI_2
-LCINCS =	-I. -I$(NUSYSINCDIR) -I$(ROOT)/usr/include/PR -Isource -Isprites
+LCINCS =	-I. -I$(NUSYSINCDIR) -I$(ROOT)/usr/include/PR -Isource -Isprites -Isource/xo-64
 LCOPTS =	-G 0
 LDFLAGS =	$(MKDEPOPT) -L$(LIB) -L$(NUSYSLIBDIR) $(NUAUDIOLIB) -lnusys_d -lgultra_d -L$(GCCDIR)/mipse/lib -lkmc
 

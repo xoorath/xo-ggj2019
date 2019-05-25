@@ -1,10 +1,10 @@
 #include <nusys.h>
 #include <nualsgi_n.h>
 #include "main.h"
-#include "xo-audio.h"
-#include "xo-controller.h"
-#include "xo-img.h"
-#include "xo-render.h"
+#include <xo-audio.h>
+#include <xo-controller.h>
+#include <xo-img.h>
+#include <xo-render.h>
 #include "donsol-audio.h"
 #include "donsol-stage-play.h"
 
