@@ -45,6 +45,7 @@ void makeDL00(void)
   xo_render_EndFrame();
 }
 
+static frames_until_transfer = 10;
 void updateGame00(void)
 {
   u8 i;
@@ -72,8 +73,10 @@ void updateGame00(void)
       }
     }
 
-    if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    //if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    if(--frames_until_transfer <= 0)
     {
+      frames_until_transfer = 10;
       nuGfxFuncRemove();
       stage = 1;
     }

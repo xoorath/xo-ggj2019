@@ -134,6 +134,8 @@ void changeFrameBuffer(void)
 /* The stage 0 */
 void stage00(int pendingGfx)
 {
+  updateGame00();
+
   /* If necessary, change frame buffer number.*/
   if (pendflag != oldpendflag)
   {
@@ -149,12 +151,12 @@ void stage00(int pendingGfx)
     makeDL00();
   }
 
-  /* The game progressing process */
-  updateGame00();
 }
 
 void donsol_stage_play_gfx_tick(int pendingGfx)
 {
+    donsol_stage_play_update();
+
   // If necessary, change the number of frame buffers
   if (pendflag != oldpendflag)
   {
@@ -169,7 +171,4 @@ void donsol_stage_play_gfx_tick(int pendingGfx)
     dspcount = calcFrame();
     donsol_stage_play_render();
   }
-
-  // The game progressing process
-  donsol_stage_play_update();
 }

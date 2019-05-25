@@ -96,7 +96,6 @@ void donsol_stage_play_init(void)
 
 }
 
-static int img_idx = 0;
 void donsol_stage_play_render(void)
 {
   u8 i;
@@ -117,6 +116,7 @@ void donsol_stage_play_render(void)
   xo_render_EndFrame();
 }
 
+static frames_until_transfer = 10;
 void donsol_stage_play_update(void)
 {
   u8 i;
@@ -144,8 +144,10 @@ void donsol_stage_play_update(void)
       }
     }
 
-    if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    //if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
+    if(--frames_until_transfer <= 0)
     {
+      frames_until_transfer = 10;
       nuGfxFuncRemove();
       stage = 0;
     }
