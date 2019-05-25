@@ -15,7 +15,7 @@ void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
   nuPiReadRom((u32)from_addr, to_addr, seq_size >= lim ? lim : seq_size);
 }
 
-void xo_img_init() {
+void xo_img_init(void) {
   xo_alloc_init_allocator(&g_TextureAllocator, g_TextureBuffer, sizeof(g_TextureBuffer));
 }
 
@@ -105,4 +105,8 @@ void xo_img_Apply(Img_t* img, u8 segment)
       G_TX_NOMASK, G_TX_NOMASK,
       G_TX_NOLOD, G_TX_NOLOD);
   }
+}
+
+void xo_img_DebugDraw(void) {
+  xo_alloc_dbg_draw(&g_TextureAllocator);
 }

@@ -155,7 +155,7 @@ void stage00(int pendingGfx)
 
 void donsol_stage_play_gfx_tick(int pendingGfx)
 {
-    donsol_stage_play_update();
+  donsol_stage_play_update();
 
   // If necessary, change the number of frame buffers
   if (pendflag != oldpendflag)

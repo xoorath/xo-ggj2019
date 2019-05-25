@@ -12,6 +12,7 @@ static struct
 {
   Sprite_t joker;
   u8 controllerPluggedIn;
+  u8 allocDebug;
 
 } s_Stage00;
 
@@ -42,6 +43,11 @@ void makeDL00(void)
   {
     xo_render_DebugLog("no controller");
   }
+
+  if(s_Stage00.allocDebug) {
+    xo_img_DebugDraw();
+  }
+
   xo_render_EndFrame();
 }
 
@@ -54,6 +60,8 @@ void updateGame00(void)
   xo_controller_Update();
   // get the first plugged in controller
   i = xo_controller_GetIndex(0);
+
+  s_Stage00.allocDebug = 0;
 
   if (xo_contoller_IsConnected(i))
   {
@@ -72,6 +80,8 @@ void updateGame00(void)
         s_Stage00.joker.r += 1.0f;
       }
     }
+
+    s_Stage00.allocDebug = !!xo_controller_ButtonDown(i, XO_BUTTON_BUMPER_LEFT);
 
     if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
     //if(--frames_until_transfer <= 0)

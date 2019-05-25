@@ -31,4 +31,7 @@ void  xo_alloc_free          (BlockAllocator_t* allocator, void* mem);
 void* xo_alloc_malloc8        (BlockAllocator_t* allocator, u32 size);
 void  xo_alloc_free8          (BlockAllocator_t* allocator, void* mem);
 
+// dbg
+void xo_alloc_dbg_draw(BlockAllocator_t* allocator);
+
 #endif

@@ -14,6 +14,7 @@ static struct
 {
   Sprite_t deck[DECK_COUNT];
   u8 controllerPluggedIn;
+  u8 allocDebug;
 } s_StagePlay;
 
 
@@ -113,6 +114,12 @@ void donsol_stage_play_render(void)
   {
     xo_render_DebugLog("no controller");
   }
+
+    // debug draw if player 4 has both shoulders pressed
+  if(s_StagePlay.allocDebug) {
+    xo_img_DebugDraw();
+  }
+
   xo_render_EndFrame();
 }
 
@@ -125,6 +132,8 @@ void donsol_stage_play_update(void)
   xo_controller_Update();
   // get the first plugged in controller
   i = xo_controller_GetIndex(0);
+
+  s_StagePlay.allocDebug = 0;
 
   if (xo_contoller_IsConnected(i))
   {
@@ -143,6 +152,8 @@ void donsol_stage_play_update(void)
         s_StagePlay.deck[0].r += 1.0f;
       }
     }
+
+    s_StagePlay.allocDebug = !!xo_controller_ButtonDown(i, XO_BUTTON_BUMPER_LEFT);
 
     if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
     //if(--frames_until_transfer <= 0)

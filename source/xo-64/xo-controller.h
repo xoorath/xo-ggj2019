@@ -9,8 +9,8 @@ typedef enum {
 
   XO_BUTTON_START         = START_BUTTON,
 
-  XO_BUTTON_TRIGGER_LEFT  = L_TRIG,
-  XO_BUTTON_TRIGGER_RIGHT = R_TRIG,
+  XO_BUTTON_BUMPER_LEFT   = L_TRIG,
+  XO_BUTTON_BUMPER_RIGHT  = R_TRIG,
   XO_BUTTON_TRIGGER_Z     = Z_TRIG,
 
   XO_BUTTON_D_UP          = U_JPAD,
@@ -51,7 +51,7 @@ u16 xo_contoller_IsConnected(u8 index);
 u8 xo_controller_NumberConnected();
 
 // get the index for the nth controller.
-// examples: 
+// examples:
 //  If the first and third controller ports are plugged in this function maps:
 //  0->0, 1->2, 2->0xff (invalid), 3->0xff (invalid)
 //  If only the last controller port is plugged in:

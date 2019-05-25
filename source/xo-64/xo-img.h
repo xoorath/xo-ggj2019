@@ -25,7 +25,7 @@ typedef struct {
 } Img_t;
 
 // global init, call once before loading any textures.
-void xo_img_init();
+void xo_img_init(void);
 
 void xo_img_Load(Img_t *img);
 void xo_img_Unload(Img_t *img);
@@ -33,5 +33,7 @@ void xo_img_Unload(Img_t *img);
 void xo_img_Bind(Img_t *img, u8 segment);
 void xo_img_Unbind(void);
 void xo_img_Apply(Img_t *img, u8 segment);
+
+void xo_img_DebugDraw(void);
 
 #endif
