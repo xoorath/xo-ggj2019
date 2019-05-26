@@ -3,6 +3,8 @@ include $(ROOT)/usr/include/make/PRdefs
 N64KITDIR    = c:\nintendo\n64kit
 NUSYSINCDIR  = $(N64KITDIR)/nusys/include
 NUSYSLIBDIR  = $(N64KITDIR)/nusys/lib
+NSTDINCDIR = $(N64KITDIR)/nustd/include
+NSTDLIBDIR = $(N64KITDIR)/nustd/lib
 
 LIB = $(ROOT)/usr/lib
 LPR = $(LIB)/PR
@@ -14,9 +16,9 @@ MAKEROM = @mild
 NUAUDIOLIB = -lnualstl_n_d -ln_gmus_d -ln_gaudio_sc
 
 LCDEFS =	-DNU_DEBUG -DF3DEX_GBI_2
-LCINCS =	-I. -I$(NUSYSINCDIR) -I$(ROOT)/usr/include/PR -Isource -Isprites -Isource/xo-64
+LCINCS =	-I. -I$(NUSYSINCDIR) -I$(NSTDINCDIR) -I$(ROOT)/usr/include/PR -Isource -Isprites -Isource/xo-64
 LCOPTS =	-G 0
-LDFLAGS =	$(MKDEPOPT) -L$(LIB) -L$(NUSYSLIBDIR) $(NUAUDIOLIB) -lnusys_d -lgultra_d -L$(GCCDIR)/mipse/lib -lkmc
+LDFLAGS =	$(MKDEPOPT) -L$(LIB) -L$(NUSYSLIBDIR) -L$(NSTDLIBDIR) $(NUAUDIOLIB) -lnustd_d -lnusys_d -lgultra_d -L$(GCCDIR)/mipse/lib -lkmc
 
 OPTIMIZER =	-g
 
@@ -42,7 +44,10 @@ code: $(TARGETS)
 
 clean:
 		rm -f **/*.o
-		rm -f build/*.out
+		rm -f build/*.*
+		touch **/*.c
+		touch **/*.h
+
 
 $(CODESEGMENT):	$(CODEOBJECTS) Makefile
 		$(LD) -o $(CODESEGMENT) -r $(CODEOBJECTS) $(LDFLAGS)

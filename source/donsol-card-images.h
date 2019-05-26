@@ -53,3 +53,68 @@
 #include <cardspadesj.h>
 #include <cardspadesq.h>
 #include <cardspadesk.h>
+
+#include <cardjoker.h>
+#include <cardback.h>
+
+
+#include <cardclubs2_l.h>
+#include <cardclubs3_l.h>
+#include <cardclubs4_l.h>
+#include <cardclubs5_l.h>
+#include <cardclubs6_l.h>
+#include <cardclubs7_l.h>
+#include <cardclubs8_l.h>
+#include <cardclubs9_l.h>
+#include <cardclubs10_l.h>
+#include <cardclubsa_l.h>
+#include <cardclubsj_l.h>
+#include <cardclubsq_l.h>
+#include <cardclubsk_l.h>
+
+#include <carddiamonds2_l.h>
+#include <carddiamonds3_l.h>
+#include <carddiamonds4_l.h>
+#include <carddiamonds5_l.h>
+#include <carddiamonds6_l.h>
+#include <carddiamonds7_l.h>
+#include <carddiamonds8_l.h>
+#include <carddiamonds9_l.h>
+#include <carddiamonds10_l.h>
+#include <carddiamondsa_l.h>
+#include <carddiamondsj_l.h>
+#include <carddiamondsq_l.h>
+#include <carddiamondsk_l.h>
+
+#include <cardhearts2_l.h>
+#include <cardhearts3_l.h>
+#include <cardhearts4_l.h>
+#include <cardhearts5_l.h>
+#include <cardhearts6_l.h>
+#include <cardhearts7_l.h>
+#include <cardhearts8_l.h>
+#include <cardhearts9_l.h>
+#include <cardhearts10_l.h>
+#include <cardheartsa_l.h>
+#include <cardheartsj_l.h>
+#include <cardheartsq_l.h>
+#include <cardheartsk_l.h>
+
+#include <cardspades2_l.h>
+#include <cardspades3_l.h>
+#include <cardspades4_l.h>
+#include <cardspades5_l.h>
+#include <cardspades6_l.h>
+#include <cardspades7_l.h>
+#include <cardspades8_l.h>
+#include <cardspades9_l.h>
+#include <cardspades10_l.h>
+#include <cardspadesa_l.h>
+#include <cardspadesj_l.h>
+#include <cardspadesq_l.h>
+#include <cardspadesk_l.h>
+
+#include <cardjoker_l.h>
+
+// not part of the set, used for debug/error drawing
+#include <test_joker.h>

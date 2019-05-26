@@ -4,10 +4,14 @@
 #include <xo-buffer.h>
 #include <xo-render.h>
 
+#include <malloc.h>
+
 #include <nusys.h>
 
-static BlockAllocator_t g_TextureAllocator;
-static char g_TextureBuffer[XO_BUFFER_TEX_MEM] = {0};
+static OSRegion region;
+static BlockAllocator_t g_TextureAllocator1, g_TextureAllocator2;
+//char g_TextureBuffer1[512000] = {0};
+//char g_TextureBuffer2[512000] = {0};
 
 // todo: centralize rom2ram functions
 void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
@@ -16,7 +20,8 @@ void iRom2Ram(void *from_addr, void *to_addr, s32 seq_size, s32 lim)
 }
 
 void xo_img_init(void) {
-  xo_alloc_init_allocator(&g_TextureAllocator, g_TextureBuffer, sizeof(g_TextureBuffer));
+  //xo_alloc_init_allocator(&g_TextureAllocator1, malloc(512000), 512000);
+  //xo_alloc_init_allocator(&g_TextureAllocator2, malloc(512000), 512000);
 }
 
 void xo_img_Load(Img_t *img) {
@@ -31,7 +36,9 @@ void xo_img_Load(Img_t *img) {
     seg = &img->components[i];
     if(NULL == seg->data) {
       segSize = (seg->w * seg->h * 2);
-      seg->data = xo_alloc_malloc8(&g_TextureAllocator, segSize);
+
+      seg->data = malloc(segSize);
+
       if(NULL != seg->data) {
         nuPiReadRom((u32)seg->start, seg->data, segSize);
       }
@@ -49,7 +56,8 @@ void xo_img_Unload(Img_t *img) {
   for(i = 0; i < img->componentCount; ++i) {
     seg = &img->components[i];
     if(NULL != seg->data) {
-      xo_alloc_free8(&g_TextureAllocator, seg->data);
+        free(seg->data);
+
       seg->data = NULL;
     }
   }
@@ -108,5 +116,6 @@ void xo_img_Apply(Img_t* img, u8 segment)
 }
 
 void xo_img_DebugDraw(void) {
-  xo_alloc_dbg_draw(&g_TextureAllocator);
+  xo_alloc_dbg_draw(&g_TextureAllocator1, 0, 10);
+  xo_alloc_dbg_draw(&g_TextureAllocator2, 0, 14);
 }

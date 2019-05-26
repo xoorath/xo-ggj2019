@@ -5,8 +5,10 @@
 #include <xo-controller.h>
 #include <xo-img.h>
 #include <xo-render.h>
+#include <malloc.h>
 #include "donsol-audio.h"
 #include "donsol-stage-play.h"
+
 
 volatile int stage;
 
@@ -38,6 +40,8 @@ static u16 *FrameBuf3[3] = {
 /* The number of displaying scene in a second */
 int dspcount = 0;
 
+#define HEAP_LENGTH 0x200000
+u8 system_heap[HEAP_LENGTH];
 
 /*------------------------
   Main
@@ -45,6 +49,7 @@ int dspcount = 0;
 void mainproc(void)
 {
   nuGfxInit();
+  InitHeap((void *)system_heap,HEAP_LENGTH);
 
   xo_img_init();
   xo_render_Init();
@@ -134,6 +139,7 @@ void changeFrameBuffer(void)
 /* The stage 0 */
 void stage00(int pendingGfx)
 {
+  xo_controller_Update();
   updateGame00();
 
   /* If necessary, change frame buffer number.*/
@@ -155,6 +161,7 @@ void stage00(int pendingGfx)
 
 void donsol_stage_play_gfx_tick(int pendingGfx)
 {
+  xo_controller_Update();
   donsol_stage_play_update();
 
   // If necessary, change the number of frame buffers

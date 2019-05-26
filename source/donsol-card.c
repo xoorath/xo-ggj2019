@@ -2,7 +2,11 @@
 
 #define GENERATED_IMAGE_DECLARATIONS
 #include "./donsol-card-images.h"
-#include <cardjoker.h>
+// todo: move
+#include <cleft.h>
+#include <cright.h>
+#include <cdown.h>
+#include <cup.h>
 #undef GENERATED_IMAGE_DECLARATIONS
 
 #ifdef _GU_H_

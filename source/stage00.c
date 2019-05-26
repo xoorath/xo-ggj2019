@@ -51,13 +51,10 @@ void makeDL00(void)
   xo_render_EndFrame();
 }
 
-static frames_until_transfer = 10;
 void updateGame00(void)
 {
   u8 i;
   f32 inputx, inputy;
-
-  xo_controller_Update();
   // get the first plugged in controller
   i = xo_controller_GetIndex(0);
 
@@ -84,9 +81,7 @@ void updateGame00(void)
     s_Stage00.allocDebug = !!xo_controller_ButtonDown(i, XO_BUTTON_BUMPER_LEFT);
 
     if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
-    //if(--frames_until_transfer <= 0)
     {
-      frames_until_transfer = 10;
       nuGfxFuncRemove();
       stage = 1;
     }

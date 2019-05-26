@@ -179,7 +179,7 @@ static void donsol_game_set_slot(DonsolGame_t* game, u8 slotIndex, u8 deckIndex)
                     break;
                 case CARD_K:
                     desc->power = 15;
-                    sprintf(desc->simpleName, "Regnant");
+                    sprintf(desc->simpleName, "Regant");
                     break;
                 case CARD_A:
                     desc->power = 17;

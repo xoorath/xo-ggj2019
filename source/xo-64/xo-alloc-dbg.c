@@ -3,7 +3,7 @@
 #include <xo-types.h>
 #include <xo-render.h>
 
-void xo_alloc_dbg_draw(BlockAllocator_t* allocator) {
+void xo_alloc_dbg_draw(BlockAllocator_t* allocator, u32 x, u32 y) {
   u32
     size_bytes,
     used_bytes,
@@ -42,12 +42,12 @@ void xo_alloc_dbg_draw(BlockAllocator_t* allocator) {
 
     nuDebConTextColor(0, NU_DEB_CON_TEXT_BLUE);
 
-    nuDebConTextPos(0, 1, 10);
-    nuDebConPrintf(NU_DEB_CON_WINDOW0, "bytes n:%d sys:%d", (int)size_bytes, (int)sys_bytes);
-    nuDebConTextPos(0, 1, 11);
-    nuDebConPrintf(NU_DEB_CON_WINDOW0, "bytes free:%d used:%d", (int)unused_bytes, (int)used_bytes);
-    nuDebConTextPos(0, 1, 12);
-    nuDebConPrintf(NU_DEB_CON_WINDOW0, "blocks n:%d free:%d used:%d", (int)blocks_free+(int)blocks_used, (int)blocks_free, (int)blocks_used);
+    nuDebConTextPos(0, x, y+0);
+    nuDebConPrintf(NU_DEB_CON_WINDOW0, "bytes n:%u sys:%u", size_bytes, sys_bytes);
+    nuDebConTextPos(0, x, y+1);
+    nuDebConPrintf(NU_DEB_CON_WINDOW0, "bytes free:%u used:%u", unused_bytes, used_bytes);
+    nuDebConTextPos(0, x, y+2);
+    nuDebConPrintf(NU_DEB_CON_WINDOW0, "blocks n:%u free:%u used:%u", blocks_free+blocks_used, blocks_free, blocks_used);
 
     nuDebConTextColor(0, NU_DEB_CON_TEXT_WHITE);
   }
