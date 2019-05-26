@@ -232,10 +232,10 @@ void donsol_stage_play_init(void)
   xo_img_Load(&cup);
   xo_img_Load(&cdown);
 
-  xo_sprite_init(&s_StagePlay.cbuttons[0], &cdown);
-  xo_sprite_init(&s_StagePlay.cbuttons[1], &cdown);
+  xo_sprite_init(&s_StagePlay.cbuttons[0], &cleft);
+  xo_sprite_init(&s_StagePlay.cbuttons[1], &cup);
   xo_sprite_init(&s_StagePlay.cbuttons[2], &cdown);
-  xo_sprite_init(&s_StagePlay.cbuttons[3], &cdown);
+  xo_sprite_init(&s_StagePlay.cbuttons[3], &cright);
 
   for(i = 0; i < 4; ++i) {
     xo_sprite_init(&s_StagePlay.cards[i], &cardback);
