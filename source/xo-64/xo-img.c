@@ -81,6 +81,7 @@ void xo_img_Bind(Img_t *img, u8 segment)
     //gDPSetTextureConvert(g_Glist++,G_TC_FILT);
     //gDPSetTextureLUT(g_Glist++,G_TT_NONE);
 
+
 #ifndef __INTELLISENSE__
     gDPSetCombineMode(g_Glist++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 #endif

@@ -179,7 +179,7 @@ static void donsol_game_set_slot(DonsolGame_t* game, u8 slotIndex, u8 deckIndex)
                     break;
                 case CARD_K:
                     desc->power = 15;
-                    sprintf(desc->simpleName, "Regant");
+                    sprintf(desc->simpleName, "Regent");
                     break;
                 case CARD_A:
                     desc->power = 17;
@@ -279,7 +279,15 @@ static void donsol_game_pick_potion(DonsolGame_t* game, Card_t *dcard, u8 val) {
 }
 
 static void donsol_game_pick_shield(DonsolGame_t* game, Card_t *dcard, int power) {
+    char buff[64] = {0};
     donsol_game_clear_deltas(game);
+
+    if(game->dp > 0) {
+      sprintf(buff, "%d/%d dp dropped. %d dp equipped", game->dp, game->shieldBreakLimit < 0 ? game->dp : game->shieldBreakLimit, power);
+    } else {
+      sprintf(buff, "%d dp shield equipped", power);
+    }
+    game->onStatusUpdate(DONSOL_SHIELD_EQUIPED, buff);
 
     game->dpDelta = (s8)power - (s8)game->dp;
     game->dp = power;
@@ -296,17 +304,17 @@ static bool donsol_game_pick_enemy(DonsolGame_t* game, Card_t *dcard, int atk) {
     DonsolCardDescription_t* cd;
     bool shieldIsDamaged;
     int damage = atk;
-    char msgBuff[32] = {0};
+    char msgBuff[64] = {0};
 
     donsol_game_clear_deltas(game);
 
+    shieldIsDamaged = false;
     if(game->dp > 0) {
         shieldIsDamaged = game->shieldBreakLimit >= 0;
         if(shieldIsDamaged && atk > game->shieldBreakLimit) {
             game->dpDelta = -game->dp;
             game->dp = 0;
             game->shieldBreakLimit = -1;
-            game->onStatusUpdate(DONSOL_SHIELD_BROKE, "Broke!");
         } else {
             game->shieldBreakLimit = atk;
             damage = atk > game->dp ? abs(atk - (int)game->dp) : 0;
@@ -331,12 +339,20 @@ static bool donsol_game_pick_enemy(DonsolGame_t* game, Card_t *dcard, int atk) {
     }
 
     if(game->hp < 1) {
-        sprintf(msgBuff, "The %s killed you!", cd->simpleName);
+        if(shieldIsDamaged && game->dp == 0) {
+          sprintf(msgBuff, "Shield broke. The %s killed you!", cd->simpleName);
+        } else {
+          sprintf(msgBuff, "The %s killed you!", cd->simpleName);
+        }
         game->wonOrDied = true;
         game->onStatusUpdate(DONSOL_LOST_FIGHT, msgBuff);
         return false;
     } else {
-        sprintf(msgBuff, "Battled the %s.", cd->simpleName);
+        if(shieldIsDamaged && game->dp == 0) {
+          sprintf(msgBuff, "Battled the %s. Shield broke!", cd->simpleName);
+        } else {
+          sprintf(msgBuff, "Battled the %s.", cd->simpleName);
+        }
         game->onStatusUpdate(DONSOL_LOST_FIGHT, msgBuff);
     }
 
@@ -388,6 +404,8 @@ void donsol_game_pick_run(DonsolGame_t* game) {
     if(!game->canRun) {
         game->onStatusUpdate(DONSOL_STATUS_CANT_RUN, "You can't escape this room.");
         return;
+    } else {
+      game->onStatusUpdate(DONSOL_STATUS_CANT_RUN, "Fled the room.");
     }
 
     donsol_game_deal4(game);

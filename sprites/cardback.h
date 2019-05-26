@@ -22,24 +22,24 @@ extern Img_t cardback;
 #include <PR/gbi.h>
 
 Vtx cardback_mesh_0[] = {
-    {.v = {.ob = {0  , 0  , 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , 0  , 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , -32, 0}, .flag = 0, .tc = {64 <<6, 32 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0  , -32, 0}, .flag = 0, .tc = {0  <<6, 32 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}}
+    {.v = {.ob = {0  , 0  , 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , 0  , 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , -32, 0}, .flag = 0, .tc = {64 <<6, 32 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {0  , -32, 0}, .flag = 0, .tc = {0  <<6, 32 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}}
 }; // cardback_mesh_0
 
 Vtx cardback_mesh_1[] = {
-    {.v = {.ob = {0  , -32, 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , -32, 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , -64, 0}, .flag = 0, .tc = {64 <<6, 32 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0  , -64, 0}, .flag = 0, .tc = {0  <<6, 32 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}}
+    {.v = {.ob = {0  , -32, 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , -32, 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , -64, 0}, .flag = 0, .tc = {64 <<6, 32 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {0  , -64, 0}, .flag = 0, .tc = {0  <<6, 32 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}}
 }; // cardback_mesh_1
 
 Vtx cardback_mesh_2[] = {
-    {.v = {.ob = {0  , -64, 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , -64, 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {64 , -86, 0}, .flag = 0, .tc = {64 <<6, 22 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0  , -86, 0}, .flag = 0, .tc = {0  <<6, 22 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}}
+    {.v = {.ob = {0  , -64, 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , -64, 0}, .flag = 0, .tc = {64 <<6, 0  <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {64 , -86, 0}, .flag = 0, .tc = {64 <<6, 22 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}},
+    {.v = {.ob = {0  , -86, 0}, .flag = 0, .tc = {0  <<6, 22 <<6}, .cn = {0xa2, 0xa2, 0xa2, 0xfe}}}
 }; // cardback_mesh_2
 
 ImgSeg_t cardback_components[] = {

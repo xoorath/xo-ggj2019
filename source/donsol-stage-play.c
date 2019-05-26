@@ -98,8 +98,6 @@ void donsol_stage_play_init(void)
   u8 xSpacing;
   u8 i = 0;
 
-  xo_render_SetClearColor(3, 3, 3);
-
   memset(&s_StagePlay.game, 0, sizeof(s_StagePlay.game));
   memset(s_StagePlay.errorText, 0, sizeof(s_StagePlay.errorText));
   memset(s_StagePlay.statusText, 0, sizeof(s_StagePlay.statusText));
@@ -234,40 +232,42 @@ void donsol_stage_play_init(void)
 
   xo_sprite_init(&s_StagePlay.cbuttons[0], &cleft);
   xo_sprite_init(&s_StagePlay.cbuttons[1], &cup);
-  xo_sprite_init(&s_StagePlay.cbuttons[2], &cdown);
-  xo_sprite_init(&s_StagePlay.cbuttons[3], &cright);
+  xo_sprite_init(&s_StagePlay.cbuttons[2], &cright);
+  xo_sprite_init(&s_StagePlay.cbuttons[3], &cdown);
 
   for(i = 0; i < 4; ++i) {
     xo_sprite_init(&s_StagePlay.cards[i], &cardback);
     xo_sprite_init(&s_StagePlay.labels[i], &cardback);
   }
 
-  s_StagePlay.hpPosX = 60;
-  s_StagePlay.hpPosY = 3;
-  s_StagePlay.dpPosX = 40;
-  s_StagePlay.dpPosY = 3;
-  s_StagePlay.xpPosX = 20;
-  s_StagePlay.xpPosY = 3;
+  s_StagePlay.hpPosX = 2;
+  s_StagePlay.hpPosY = 26;
+
+  s_StagePlay.dpPosX = s_StagePlay.hpPosX + 13;
+  s_StagePlay.dpPosY = 26;
+
+  s_StagePlay.xpPosX = s_StagePlay.dpPosX + 15;
+  s_StagePlay.xpPosY = 26;
 
   xSpacing = 0;
   for(i = 0; i < 4; ++i) {
-    s_StagePlay.cards[i].x = (-(SCREEN_WD/2)+32) + 17 + (64*i) + xSpacing;
-    s_StagePlay.cards[i].y = (-(SCREEN_HT/2) + (87/2)) + 87;
+    s_StagePlay.cards[i].x = (f32)(s32)((32.f) + 17.f + (64.f*i) + xSpacing);
+    s_StagePlay.cards[i].y = (f32)(s32)(87.f * 2);
     xSpacing += 10;
 
-    s_StagePlay.labels[i].x = s_StagePlay.cards[i].x;
-    s_StagePlay.labels[i].y = s_StagePlay.cards[i].y - (87/2) - 16;
+    s_StagePlay.labels[i].x = (f32)(s32)(s_StagePlay.cards[i].x);
+    s_StagePlay.labels[i].y = (f32)(s32)(s_StagePlay.cards[i].y - (87.f/2.f) - 36.f);
 
-    s_StagePlay.cbuttons[i].x = s_StagePlay.labels[i].x;
-    s_StagePlay.cbuttons[i].y = s_StagePlay.labels[i].y - 32;
+    s_StagePlay.cbuttons[i].x = (f32)(s32)(s_StagePlay.labels[i].x - 26);
+    s_StagePlay.cbuttons[i].y = (f32)(s32)(s_StagePlay.labels[i].y + 24);
 
   }
 
   donsol_game_start(&s_StagePlay.game);
 
   s_StagePlay.controllerPluggedIn = false;
-  donsol_audio_Init();
-  donsol_audio_PlayMainSong();
+  //donsol_audio_Init();
+  //donsol_audio_PlayMainSong();
 }
 
 void donsol_stage_play_render(void)
@@ -280,36 +280,61 @@ void donsol_stage_play_render(void)
 
   //////////////////////////////////////////////////////////////////////////////// Status Text
   if(s_StagePlay.statusText[0] != '\0') {
-    xo_render_DebugLog(s_StagePlay.statusText);
+    nuDebConTextColor(0, NU_DEB_CON_TEXT_WHITE);
+    nuDebConTextPos(0, 2, 22);
+    nuDebConCPuts(NU_DEB_CON_WINDOW0, s_StagePlay.statusText);
   }
 
   //////////////////////////////////////////////////////////////////////////////// HP
   if(s_StagePlay.potionJustWasted) {
-    sprintf(textBuffer, "HP %02d wasted", s_StagePlay.game.hp);
+    sprintf(textBuffer, "%02d +0", s_StagePlay.game.hp);
   } else if(s_StagePlay.game.hpDelta != 0) {
-    sprintf(textBuffer, "HP %02d %c%d", s_StagePlay.game.hp, s_StagePlay.game.hpDelta>0?'+':'-', abs(s_StagePlay.game.hpDelta));
+    sprintf(textBuffer, "%02d %c%d", s_StagePlay.game.hp, s_StagePlay.game.hpDelta>0?'+':'-', abs(s_StagePlay.game.hpDelta));
   } else {
-    sprintf(textBuffer, "HP %02d", s_StagePlay.game.hp);
+    sprintf(textBuffer, "%02d", s_StagePlay.game.hp);
   }
-  xo_render_DebugLog(textBuffer);
+
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_RED);
+  nuDebConTextPos(0, s_StagePlay.hpPosX, s_StagePlay.hpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, "HP");
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_LIGHTRED);
+  nuDebConTextPos(0, s_StagePlay.hpPosX+3, s_StagePlay.hpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, textBuffer);
+
 
   //////////////////////////////////////////////////////////////////////////////// DP
   if(s_StagePlay.game.shieldBreakLimit < 0) {
-    sprintf(textBuffer, "DP %02d fresh", s_StagePlay.game.dp);
+    if(s_StagePlay.game.dp == 0) {
+      sprintf(textBuffer, "none");
+    }
+    else {
+      sprintf(textBuffer, "%02d new", s_StagePlay.game.dp);
+    }
   } else if(s_StagePlay.game.shieldBreakLimit > 0) {
-    sprintf(textBuffer, "DP %02d worn", s_StagePlay.game.dp);
+    sprintf(textBuffer, "%02d/%02d", s_StagePlay.game.dp, s_StagePlay.game.shieldBreakLimit);
   } else {
-    sprintf(textBuffer, "DP %02d", s_StagePlay.game.dp);
+    sprintf(textBuffer, "none", s_StagePlay.game.dp);
   }
-  xo_render_DebugLog(textBuffer);
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_BLUE);
+  nuDebConTextPos(0, s_StagePlay.dpPosX, s_StagePlay.dpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, "DP");
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_LIGHTBLUE);
+  nuDebConTextPos(0, s_StagePlay.dpPosX+3, s_StagePlay.dpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, textBuffer);
 
   //////////////////////////////////////////////////////////////////////////////// XP
   if(s_StagePlay.game.xpDelta > 0) {
-    sprintf(textBuffer, "XP %02d %c%d", s_StagePlay.game.xp, s_StagePlay.game.xpDelta>0?'+':'-', abs(s_StagePlay.game.xpDelta));
+    sprintf(textBuffer, "%02d %c%d", s_StagePlay.game.xp, s_StagePlay.game.xpDelta>0?'+':'-', abs(s_StagePlay.game.xpDelta));
   } else {
-    sprintf(textBuffer, "XP %02d", s_StagePlay.game.xp);
+    sprintf(textBuffer, "%02d", s_StagePlay.game.xp);
   }
-  xo_render_DebugLog(textBuffer);
+
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_LIGHTBLACK);
+  nuDebConTextPos(0, s_StagePlay.xpPosX, s_StagePlay.xpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, "XP");
+  nuDebConTextColor(0, NU_DEB_CON_TEXT_WHITE);
+  nuDebConTextPos(0, s_StagePlay.xpPosX+3, s_StagePlay.xpPosY);
+  nuDebConCPuts(NU_DEB_CON_WINDOW0, textBuffer);
 
 
   //////////////////////////////////////////////////////////////////////////////// CARDS
@@ -327,9 +352,6 @@ void donsol_stage_play_render(void)
       xo_sprite_draw_center_snap(&s_StagePlay.cbuttons[i]);
     }
   }
-
-
-
 
   xo_render_EndDisplayList_Render();
 

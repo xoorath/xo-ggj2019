@@ -862,7 +862,33 @@ beginseg
   include "sprites/test_joker.o"
 endseg
 
+beginseg
+  name "enterdonsol"
+  flags obj
+  after test_joker
+  include "sprites/enterdonsol.o"
+endseg
 
+beginseg
+  name "eye0"
+  flags obj
+  after enterdonsol
+  include "sprites/eye0.o"
+endseg
+
+beginseg
+  name "eye1"
+  flags obj
+  after eye0
+  include "sprites/eye1.o"
+endseg
+
+beginseg
+  name "eye2"
+  flags obj
+  after eye1
+  include "sprites/eye2.o"
+endseg
 
 
 
@@ -988,6 +1014,10 @@ beginwave
   include "cright"
   include "cup"
   include "test_joker"
+  include "enterdonsol"
+  include "eye0"
+  include "eye1"
+  include "eye2"
 
   include "donsolptr"
   include "donsolwbank"

@@ -22,10 +22,10 @@ extern Img_t cright;
 #include <PR/gbi.h>
 
 Vtx cright_mesh_0[] = {
-    {.v = {.ob = {0  , 0  , 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {16 , 0  , 0}, .flag = 0, .tc = {16 <<6, 0  <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {16 , -16, 0}, .flag = 0, .tc = {16 <<6, 16 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}},
-    {.v = {.ob = {0  , -16, 0}, .flag = 0, .tc = {0  <<6, 16 <<6}, .cn = {0xff, 0xff, 0xff, 0xff}}}
+    {.v = {.ob = {0  , 0  , 0}, .flag = 0, .tc = {0  <<6, 0  <<6}, .cn = {0x00, 0x00, 0x00, 0x00}}},
+    {.v = {.ob = {16 , 0  , 0}, .flag = 0, .tc = {16 <<6, 0  <<6}, .cn = {0x00, 0x00, 0x00, 0x00}}},
+    {.v = {.ob = {16 , -16, 0}, .flag = 0, .tc = {16 <<6, 16 <<6}, .cn = {0x00, 0x00, 0x00, 0x00}}},
+    {.v = {.ob = {0  , -16, 0}, .flag = 0, .tc = {0  <<6, 16 <<6}, .cn = {0x00, 0x00, 0x00, 0x00}}}
 }; // cright_mesh_0
 
 ImgSeg_t cright_components[] = {

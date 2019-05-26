@@ -122,8 +122,8 @@ void xo_render_BeginDisplayList_Render(void)
   xo_render_InitRCP();
 
   guOrtho(&g_FrameData->projection,
-          -(f32)SCREEN_WD / 2.0F, (f32)SCREEN_WD / 2.0F,
-          -(f32)SCREEN_HT / 2.0F, (f32)SCREEN_HT / 2.0F,
+          .0f, (f32)SCREEN_WD,
+          .0f, (f32)SCREEN_HT,
           1.0F, 10.0F, 1.0F);
 
   gSPMatrix(g_Glist++, OS_K0_TO_PHYSICAL(&g_FrameData->projection),
@@ -201,4 +201,5 @@ void xo_render_bind_mesh(Vtx* mesh, u16 vertCount)
 void xo_render_apply_mesh()
 {
   gSP2Triangles(g_Glist++, 0, 1, 2, 0, 0, 2, 3, 0);
+
 }

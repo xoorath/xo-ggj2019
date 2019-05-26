@@ -5,27 +5,58 @@
 #include <xo-img.h>
 #include <xo-render.h>
 #include <xo-sprite.h>
-#include "cardjoker.h"
-#include <cardclubs7.h>
+
+#define GENERATED_IMAGE_DECLARATIONS
+
+#include <cleft.h>
+#include <cright.h>
+#include <cdown.h>
+#include <cup.h>
+
+#include <enterdonsol.h>
+#include <eye0.h>
+#include <eye1.h>
+#include <eye2.h>
+
+#undef GENERATED_IMAGE_DECLARATIONS
 
 static struct
 {
-  Sprite_t joker;
+  Sprite_t eyeSprites[3];
+  Sprite_t enterSprite;
+
   u8 controllerPluggedIn;
-  u8 allocDebug;
+  int leavingAnim;
 
 } s_Stage00;
 
-/* The initialization of stage 0  */
-void initStage00(void)
-{
-  // note: transformations are set before they're used. don't bother setting them here.
-  s_Stage00.controllerPluggedIn = FALSE;
-  donsol_audio_Init();
-  donsol_audio_PlayMainSong();
+void initStage00(void) {
+  u8 i;
 
-  xo_img_Load(&cardjoker);
-  xo_sprite_init(&s_Stage00.joker, &cardjoker);
+  xo_render_SetClearColor(10, 10, 10);
+
+  s_Stage00.controllerPluggedIn = FALSE;
+  //donsol_audio_Init();
+  //donsol_audio_PlayMainSong();
+
+  xo_img_Load(&enterdonsol);
+  xo_sprite_init(&s_Stage00.enterSprite, &enterdonsol);
+
+  xo_img_Load(&eye0);
+  xo_img_Load(&eye1);
+  xo_img_Load(&eye2);
+  xo_sprite_init(&s_Stage00.eyeSprites[0], &eye0);
+  xo_sprite_init(&s_Stage00.eyeSprites[1], &eye1);
+  xo_sprite_init(&s_Stage00.eyeSprites[2], &eye2);
+
+  for(i = 0; i < 3; ++i) {
+    s_Stage00.eyeSprites[i].x = (SCREEN_WD/2);
+    s_Stage00.eyeSprites[i].y = (SCREEN_HT/2) + 20;
+  }
+
+  s_Stage00.enterSprite.x = (SCREEN_WD/2);
+  s_Stage00.enterSprite.y = (SCREEN_HT/2) - 64;
+  s_Stage00.leavingAnim = -1;
 }
 
 void makeDL00(void)
@@ -35,17 +66,17 @@ void makeDL00(void)
 
   xo_render_BeginDisplayList_Render();
 
-  xo_sprite_draw_center_snap(&s_Stage00.joker);
+  xo_sprite_draw_center_snap(&s_Stage00.enterSprite);
+  for(i = 0; i < 3; ++i) {
+    xo_sprite_draw_center_snap(&s_Stage00.eyeSprites[i]);
+  }
+
 
   xo_render_EndDisplayList_Render();
-  xo_render_DebugLog("stage 00");
+
   if(!s_Stage00.controllerPluggedIn)
   {
     xo_render_DebugLog("no controller");
-  }
-
-  if(s_Stage00.allocDebug) {
-    xo_img_DebugDraw();
   }
 
   xo_render_EndFrame();
@@ -54,40 +85,28 @@ void makeDL00(void)
 void updateGame00(void)
 {
   u8 i;
-  f32 inputx, inputy;
-  // get the first plugged in controller
   i = xo_controller_GetIndex(0);
+  s_Stage00.controllerPluggedIn = !!xo_contoller_IsConnected(i);
 
-  s_Stage00.allocDebug = 0;
-
-  if (xo_contoller_IsConnected(i))
-  {
-    s_Stage00.controllerPluggedIn = TRUE;
-
-    xo_controller_GetAxisUnclamped(i, XO_AXIS_STICK, &inputx, &inputy);
-    s_Stage00.joker.x += inputx;
-    s_Stage00.joker.y += inputy;
-
-    if (xo_controller_ButtonDown(i, XO_BUTTON_TRIGGER_Z)) {
-      if (xo_controller_ButtonDown(i, XO_BUTTON_A)) {
-        s_Stage00.joker.r += 3.0f;
-      } else if (xo_controller_ButtonDown(i, XO_BUTTON_B)) {
-        s_Stage00.joker.r -= 3.0f;
-      } else {
-        s_Stage00.joker.r += 1.0f;
-      }
-    }
-
-    s_Stage00.allocDebug = !!xo_controller_ButtonDown(i, XO_BUTTON_BUMPER_LEFT);
-
-    if (xo_controller_ButtonPressed(i, XO_BUTTON_START))
-    {
+  if(s_Stage00.leavingAnim > -1) {
+    s_Stage00.leavingAnim++;
+    if(s_Stage00.leavingAnim >= 150) {
       nuGfxFuncRemove();
       stage = 1;
+    } else {
+      for(i = 0; i < 3; ++i) {
+        s_Stage00.eyeSprites[i].y += 1.1f + ((f32)i * -0.08f);
+      }
+
+      s_Stage00.enterSprite.y -= 1.2f;
     }
   }
-  else
-  {
-    s_Stage00.controllerPluggedIn = FALSE;
+
+  if (s_Stage00.controllerPluggedIn) {
+    if (xo_controller_ButtonReleased(i, XO_BUTTON_START)) {
+      s_Stage00.leavingAnim = 0;
+
+
+    }
   }
 }
